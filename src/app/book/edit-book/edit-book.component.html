@@ -1,1 +1,79 @@
-<p>edit-book works!</p>
+<div class="row my-5">
+    <h1 class="text-center">Edit Book</h1>
+    <div class="col-md-5 offset-md-3">
+      <form [formGroup]="editBookForm" action="">
+        <div formGroupName="book">
+          <div class="my-3">
+            <label class="form-label" for="title">Title : </label>
+            <input class="form-control" type="text" id="title" formControlName="title" required />
+          </div>
+          <div class="mb-3">
+              <label for="isbn" class="form-label">ISBN : </label>
+              <input type="text" class="form-control" id="isbn" formControlName="isbn" required />
+          </div>
+          <div class="mb-3">
+              <label for="price" class="form-label">Price :</label>
+              <div class="input-group">
+                  <input type="text" class="form-control" id="price" formControlName="price"
+                  placeholder="0.00" required />
+                  <span class="input-group-text">MAD</span></div>
+          </div>
+          <div class="mb-3">
+              <label for="Author" class="form-label">Author :</label>
+              <input type="text" class="form-control" id="author" formControlName="author"
+                   [matAutocomplete]="auto" required>
+              <mat-autocomplete #auto="matAutocomplete">
+                  <mat-option *ngFor="let author of listAuthors" [value]="author">
+                        {{ author }}
+                  </mat-option>
+              </mat-autocomplete>
+          </div>
+          <div class="mb-3">
+              <label for="author" class="form-label">Category :</label>
+              <input type="text" class="form-control" id="category" formControlName="category"
+                   [matAutocomplete]="cat" required>
+              <mat-autocomplete #cat="matAutocomplete">
+                  <mat-option *ngFor="let category of listCategories" [value]="category">
+                      {{ category }}</mat-option>
+              </mat-autocomplete>
+          </div>
+          <div class="mb-3">
+              <label class="form-label" for="datecreation">Date Création :</label>
+              <div class="input-group">
+                  <input
+                  id="datecreation"
+                 [matDatepicker]="datecre"
+                 class="form-control "
+                 placeholder="Select Date"
+                 formControlName="datecreation"  
+               />
+               <mat-datepicker-toggle matIconSuffix [for]="datecre"></mat-datepicker-toggle>
+               <mat-datepicker #datecre></mat-datepicker>
+              </div>
+          </div>
+          <div class="mb-3">
+              <label class="form-label" for="datepublication">Date Création :</label>
+              <div class="input-group">
+                  <input
+                  id="datepublication"
+                 [matDatepicker]="datepub"
+                 class="form-control "
+                 placeholder="Select Date"
+                 formControlName="datepublication"  
+               />
+               <mat-datepicker-toggle matIconSuffix [for]="datepub"></mat-datepicker-toggle>
+               <mat-datepicker #datepub></mat-datepicker>
+              </div>
+          </div>
+          <div class="mb-3">
+              <label for="quantity" class="form-label">Quantité : </label>
+              <input type="number" class="form-control" id="quantity" formControlName="quantity">
+          </div>
+          <div class="mb-3 text-center">
+              <button class="btn btn-lg btn-success">Update Book</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+  

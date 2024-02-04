@@ -8,3 +8,12 @@
   color: rgba(255, 255, 255, 0.5);
   border-bottom-color: rgba(255, 255, 255, 0.6);
 }
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}

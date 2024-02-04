@@ -11,11 +11,7 @@ import { Component } from '@angular/core';
   `,
   styles: [
     `
-      .footer {
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        height: 2.5rem;
+      footer {
         color: #ced4da;
       }
     `,
