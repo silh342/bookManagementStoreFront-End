@@ -3,7 +3,7 @@ import { Category } from './category';
 import { Inventory } from './inventory';
 
 export class Book {
-  public id: number;
+  public bookId: number;
   public title: string;
   public isbn: string;
   public price: number;
@@ -24,7 +24,7 @@ export class Book {
     category: Category,
     inventory: Inventory
   ) {
-    this.id = id;
+    this.bookId = id;
     this.title = title;
     this.isbn = isbn;
     this.price = price;

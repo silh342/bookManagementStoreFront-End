@@ -1,5 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DatePipe, formatDate } from '@angular/common';
+import { Observable } from 'rxjs';
+import { SharedDataService } from '../shared/sharedData.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { BookService } from '../services/book.service';
+import { Book } from '../models/book';
 
 @Component({
   selector: 'app-edit-book',
@@ -7,11 +13,58 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./edit-book.component.css'],
 })
 export class EditBookComponent implements OnInit {
-  listAuthors: string[] = ['Masashi Kishimoto', 'Oda', 'Hajime Isayama'];
-  listCategories: string[] = ['Psychology', 'Romance', 'Sports', 'Action'];
+  author = new FormControl(null, Validators.required);
+  category = new FormControl(null, Validators.required);
+  currentBookId: number;
+  authorFilteredOptions: Observable<string[]>;
+  categoryFilteredOptions: Observable<string[]>;
   editBookForm: FormGroup;
 
+  constructor(
+    private sharedService: SharedDataService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private bookService: BookService,
+    private datePipe: DatePipe
+  ) {}
+
   ngOnInit(): void {
+    this.route.params.subscribe(() => {
+      const bookId = +this.route.snapshot.paramMap.get('id');
+      this.bookService.findBook(bookId).subscribe((value) => {
+        this.currentBookId = value.bookId;
+        this.editBookForm.patchValue({
+          book: {
+            title: value.title,
+            isbn: value.isbn,
+            price: value.price,
+            dateCreation: this.datePipe.transform(
+              value.dateCreation,
+              'yyyy-MM-dd'
+            ),
+            datePublication: this.datePipe.transform(
+              value.datePublication,
+              'yyyy-MM-dd'
+            ),
+          },
+          authorName: value.author.fullName,
+          categoryName: value.category.categoryName,
+          quantity: value.inventory.quantity,
+        });
+      });
+    });
+
+    this.authorFilteredOptions = this.sharedService.fillAutocomplete(
+      this.author,
+      this.sharedService,
+      'author'
+    );
+    this.categoryFilteredOptions = this.sharedService.fillAutocomplete(
+      this.category,
+      this.sharedService,
+      'category'
+    );
+
     this.editBookForm = new FormGroup({
       book: new FormGroup({
         title: new FormControl(null, Validators.required),
@@ -20,12 +73,26 @@ export class EditBookComponent implements OnInit {
           0,
           Validators.pattern(new RegExp('[+-]?([0-9]*[.])?[0-9]+'))
         ),
-        author: new FormControl(null, Validators.required),
-        category: new FormControl(null, Validators.required),
-        datecreation: new FormControl(null),
-        datepublication: new FormControl(null),
-        quantity: new FormControl(null, Validators.required),
+        dateCreation: new FormControl(null),
+        datePublication: new FormControl(null),
       }),
+      authorName: this.author,
+      categoryName: this.category,
+      quantity: new FormControl(null, Validators.required),
     });
+  }
+
+  onSubmit(): void {
+    //TODO handle errors with a template for the errors
+    this.editBookForm.value.bookId = this.currentBookId;
+    this.bookService
+      .editBook(this.currentBookId, this.editBookForm.value)
+      .subscribe({
+        next: (value) => {
+          console.log(value);
+          this.router.navigate(['/books', this.currentBookId]);
+        },
+        error: (err) => console.log("Couldn't Update the book", err),
+      });
   }
 }

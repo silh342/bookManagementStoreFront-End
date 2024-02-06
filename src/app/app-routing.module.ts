@@ -8,21 +8,40 @@ import { AddBookComponent } from './book/add-book/add-book.component';
 import { EditBookComponent } from './book/edit-book/edit-book.component';
 import { EditStockComponent } from './book/edit-stock/edit-stock.component';
 import { HomeComponent } from './home/home.component';
+import { autocompleResolver } from './book/autocomplete.resolver';
+import { AuthComponent } from './auth/auth.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
+    resolve: { autocomplete: autocompleResolver },
   },
   {
     path: 'books',
     component: BookComponent,
     children: [
-      { path: '', component: ListBookComponent },
-      { path: 'new', component: AddBookComponent },
+      {
+        path: '',
+        component: ListBookComponent,
+      },
+      {
+        path: 'new',
+        component: AddBookComponent,
+      },
       { path: ':id', component: ShowBookComponent },
       { path: ':id/edit', component: EditBookComponent },
       { path: ':id/editstock', component: EditStockComponent },
+    ],
+  },
+  {
+    path: 'auth',
+    component: AuthComponent,
+    children: [
+      { path: 'login', component: LoginComponent },
+      { path: 'signup', component: SignUpComponent },
     ],
   },
 ];

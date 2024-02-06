@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
-import { Observable } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { SharedDataService } from '../shared/sharedData.service';
 
 @Component({
   selector: 'app-list-book',
@@ -10,25 +11,30 @@ import { Observable } from 'rxjs';
 })
 export class ListBookComponent implements OnInit {
   listBooks$: Observable<Book[]>;
-  itemsPerPage: number = 10;
+  itemsPerPage: number = 8;
   currentPage: number = 1;
   searchInputHidden: string = 'all';
   @ViewChild('selectSearchOption', { static: false })
   selectSearchOption: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
 
-  constructor(private bookService: BookService) {}
+  constructor(
+    private bookService: BookService,
+    private sharedService: SharedDataService
+  ) {}
   ngOnInit(): void {
     this.listBooks$ = this.bookService.findAllBooks();
+    this.sharedService.shareData();
   }
 
-  selectSearch(data) {
-    if (data.target.value === 'all') {
+  selectSearch(data: Event): void {
+    const selectElement: HTMLSelectElement = data.target as HTMLSelectElement;
+    if (selectElement.value === 'all') {
       this.searchInputHidden = 'all';
       this.ngOnInit();
       return;
     }
-    if (data.target.value === 'author') {
+    if (selectElement.value === 'author') {
       this.searchInputHidden = 'author';
       return;
     }
@@ -36,21 +42,55 @@ export class ListBookComponent implements OnInit {
     return;
   }
 
-  searchBooks() {
+  searchBooks(): void {
+    this.currentPage = 1;
     switch (this.searchInputHidden) {
       case 'all':
         this.listBooks$ = this.bookService.findAllBooks();
         break;
       case 'author':
-        this.listBooks$ = this.bookService.findBookByAuthor(
-          this.searchInput.nativeElement.value
-        );
+        if (this.searchInput.nativeElement.value === '') {
+          this.listBooks$ = this.bookService.findAllBooks();
+        } else {
+          this.listBooks$ = this.bookService
+            .findBookByAuthor(this.searchInput.nativeElement.value)
+            .pipe(
+              catchError((error) =>
+                throwError(() => console.log('Author Not Found', error))
+              )
+            );
+        }
+
         break;
       case 'category':
-        this.listBooks$ = this.bookService.findBookByCategory(
-          this.searchInput.nativeElement.value
-        );
+        if (this.searchInput.nativeElement.value === '') {
+          this.listBooks$ = this.bookService.findAllBooks();
+        } else {
+          this.listBooks$ = this.bookService
+            .findBookByCategory(this.searchInput.nativeElement.value)
+            .pipe(
+              catchError((error) =>
+                throwError(() => console.log('Author Not Found', error))
+              )
+            );
+        }
         break;
     }
+  }
+
+  sortBooks(sortOption: Event): void {
+    const sortSelect: HTMLSelectElement =
+      sortOption.target as HTMLSelectElement;
+    if (sortSelect.value === 'asc') {
+      this.listBooks$ = this.bookService.sortBooksAsc();
+      return;
+    }
+
+    if (sortSelect.value === 'desc') {
+      this.listBooks$ = this.bookService.sortBooksDesc();
+      return;
+    }
+    this.listBooks$ = this.bookService.findAllBooks();
+    return;
   }
 }

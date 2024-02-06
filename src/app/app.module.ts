@@ -22,6 +22,8 @@ import { AddBookComponent } from './book/add-book/add-book.component';
 import { HttpClientModule } from '@angular/common/http';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     EditBookComponent,
     EditStockComponent,
     AddBookComponent,
+    LoginComponent,
+    SignUpComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,5 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, map, startWith } from 'rxjs';
+import { SharedDataService } from '../shared/sharedData.service';
+import { formatDate } from '@angular/common';
+import { BookService } from '../services/book.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-book',
@@ -7,11 +12,31 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./add-book.component.css'],
 })
 export class AddBookComponent implements OnInit {
-  listAuthors: string[] = ['Masashi Kishimoto', 'Oda', 'Hajime Isayama'];
-  listCategories: string[] = ['Psychology', 'Romance', 'Sports', 'Action'];
+  author = new FormControl(null, Validators.required);
+  category = new FormControl(null, Validators.required);
+  authorFilteredOptions: Observable<string[]>;
+  categoryFilteredOptions: Observable<string[]>;
+
   addBookForm: FormGroup;
 
+  constructor(
+    private sharedService: SharedDataService,
+    private bookService: BookService,
+    private route: Router
+  ) {}
+
   ngOnInit(): void {
+    this.authorFilteredOptions = this.sharedService.fillAutocomplete(
+      this.author,
+      this.sharedService,
+      'author'
+    );
+    this.categoryFilteredOptions = this.sharedService.fillAutocomplete(
+      this.category,
+      this.sharedService,
+      'category'
+    );
+
     this.addBookForm = new FormGroup({
       book: new FormGroup({
         title: new FormControl(null, Validators.required),
@@ -20,12 +45,32 @@ export class AddBookComponent implements OnInit {
           0,
           Validators.pattern(new RegExp('[+-]?([0-9]*[.])?[0-9]+'))
         ),
-        author: new FormControl(null, Validators.required),
-        category: new FormControl(null, Validators.required),
-        datecreation: new FormControl(null),
-        datepublication: new FormControl(null),
-        quantity: new FormControl(null, Validators.required),
+        dateCreation: new FormControl(null),
+        datePublication: new FormControl(null),
       }),
+      authorName: this.author,
+      categoryName: this.category,
+      quantity: new FormControl(null, Validators.required),
+    });
+  }
+
+  // Implement add logic here
+  onSubmit() {
+    this.addBookForm.value.book.dateCreation = formatDate(
+      this.addBookForm.value.book.dateCreation,
+      'yyyy-MM-dd',
+      'en-US'
+    );
+
+    this.addBookForm.value.book.datePublication = formatDate(
+      this.addBookForm.value.book.datePublication,
+      'yyyy-MM-dd',
+      'en-US'
+    );
+    //TODO handle errors with a template for the errors
+    this.bookService.addBook(this.addBookForm.value).subscribe((res) => {
+      this.route.navigate(['/books']);
+      this.addBookForm.reset();
     });
   }
 }
