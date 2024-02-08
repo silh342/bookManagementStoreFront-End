@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, map, startWith } from 'rxjs';
+import { Observable } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
 import { formatDate } from '@angular/common';
 import { BookService } from '../services/book.service';
@@ -57,13 +57,13 @@ export class AddBookComponent implements OnInit {
     this.addBookForm = new FormGroup({
       book: new FormGroup({
         title: new FormControl(null, Validators.required),
-        isbn: new FormControl(null),
+        isbn: new FormControl(null, Validators.required),
         price: new FormControl(
-          0,
-          Validators.pattern(new RegExp('[+-]?([0-9]*[.])?[0-9]+'))
+          null,
+          Validators.pattern(new RegExp(/[+-]?([0-9]*[.])?[0-9]+/))
         ),
-        dateCreation: new FormControl(null),
-        datePublication: new FormControl(null),
+        dateCreation: new FormControl(null, Validators.required),
+        datePublication: new FormControl(null, Validators.required),
       }),
       authorName: this.author,
       categoryName: this.category,

@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
-
 import { AppComponent } from './app.component';
 import { BookComponent } from './book/book.component';
 import { HeaderComponent } from './header/header.component';
@@ -29,6 +28,7 @@ import { ConfirmationDialogComponent } from './book/confirmation-dialog/confirma
 import { MatButtonModule } from '@angular/material/button';
 import { ErrorComponent } from './error/error.component';
 import { FlashComponent } from './flash/flash.component';
+import { ValidateInputDirective } from './directives/validate-input.directive';
 
 @NgModule({
   declarations: [
@@ -48,6 +48,7 @@ import { FlashComponent } from './flash/flash.component';
     ConfirmationDialogComponent,
     ErrorComponent,
     FlashComponent,
+    ValidateInputDirective,
   ],
   imports: [
     BrowserModule,
