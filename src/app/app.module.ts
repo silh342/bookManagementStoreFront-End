@@ -27,6 +27,8 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { ConfirmationDialogComponent } from './book/confirmation-dialog/confirmation-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
+import { ErrorComponent } from './error/error.component';
+import { FlashComponent } from './flash/flash.component';
 
 @NgModule({
   declarations: [
@@ -44,6 +46,8 @@ import { MatButtonModule } from '@angular/material/button';
     LoginComponent,
     SignUpComponent,
     ConfirmationDialogComponent,
+    ErrorComponent,
+    FlashComponent,
   ],
   imports: [
     BrowserModule,
