@@ -6,6 +6,8 @@ import { SharedDataService } from '../shared/sharedData.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-edit-book',
@@ -23,10 +25,29 @@ export class EditBookComponent implements OnInit {
   constructor(
     private sharedService: SharedDataService,
     private route: ActivatedRoute,
+    private dialog: MatDialog,
     private router: Router,
     private bookService: BookService,
     private datePipe: DatePipe
   ) {}
+
+  openEditConfirmationDialog(): void {
+    const dialogReference = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: {
+        title: 'Confirm Operation',
+        message: 'Are you sure you want to confirm this operation',
+      },
+    });
+
+    dialogReference.afterClosed().subscribe((answer) => {
+      if (answer) {
+        this.onSubmit();
+      } else {
+        console.log('Action Canceled');
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(() => {

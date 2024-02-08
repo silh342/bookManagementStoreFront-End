@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-show-book',
@@ -16,8 +18,25 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
   ) {}
+
+  openDeleteConfirmationDialog(id: number) {
+    const deleteDialog = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: {
+        title: 'Confirm Delete Operation',
+        message: 'You confirm that you want to delete this book',
+      },
+    });
+
+    deleteDialog.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteBook(id);
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.paramSubscription = this.route.params.subscribe(() => {

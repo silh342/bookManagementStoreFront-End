@@ -5,6 +5,8 @@ import { SharedDataService } from '../shared/sharedData.service';
 import { formatDate } from '@angular/common';
 import { BookService } from '../services/book.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-add-book',
@@ -22,8 +24,23 @@ export class AddBookComponent implements OnInit {
   constructor(
     private sharedService: SharedDataService,
     private bookService: BookService,
-    private route: Router
+    private route: Router,
+    private dialog: MatDialog
   ) {}
+
+  openRegisterBookConfirmationDialog() {
+    const dialog = this.dialog.open(ConfirmationDialogComponent, {
+      width: '500px',
+      data: {
+        title: 'Confirm Operation',
+        message: 'Do you want to confirm the registration of the book ?',
+      },
+    });
+
+    dialog.afterClosed().subscribe((result) => {
+      if (result) this.onSubmit();
+    });
+  }
 
   ngOnInit(): void {
     this.authorFilteredOptions = this.sharedService.fillAutocomplete(

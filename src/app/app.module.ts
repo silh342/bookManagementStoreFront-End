@@ -20,10 +20,13 @@ import { EditBookComponent } from './book/edit-book/edit-book.component';
 import { EditStockComponent } from './book/edit-stock/edit-stock.component';
 import { AddBookComponent } from './book/add-book/add-book.component';
 import { HttpClientModule } from '@angular/common/http';
+import { MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { ConfirmationDialogComponent } from './book/confirmation-dialog/confirmation-dialog.component';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [
@@ -40,12 +43,15 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
     AddBookComponent,
     LoginComponent,
     SignUpComponent,
+    ConfirmationDialogComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     RouterModule,
     HttpClientModule,
+    MatDialogModule,
+    MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
