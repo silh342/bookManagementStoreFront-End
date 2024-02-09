@@ -2,8 +2,8 @@
   <h1 class="text-center">Edit Book</h1>
   <div class="col-md-5 offset-md-3">
     <form
-      #editForm="ngForm"
       [formGroup]="editBookForm"
+      #editForm
       (ngSubmit)="openEditConfirmationDialog()"
     >
       <div formGroupName="book">
@@ -11,27 +11,34 @@
         <div class="my-3">
           <label class="form-label" for="title">Title :</label>
           <input
+            [setValidFlag]="editBookForm.get('book.title')"
             class="form-control"
             type="text"
             id="title"
             formControlName="title"
             required
           />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">please provide a valid title</div>
         </div>
         <div class="mb-3">
           <label for="isbn" class="form-label">ISBN : </label>
           <input
+            [setValidFlag]="editBookForm.get('book.isbn')"
             type="text"
             class="form-control"
             id="isbn"
             formControlName="isbn"
             required
           />
+          <div class="valid-feedback">Looks good!</div>
+          <div class="invalid-feedback">please provide a valid isbn</div>
         </div>
         <div class="mb-3">
           <label for="price" class="form-label">Price :</label>
           <div class="input-group">
             <input
+              [setValidFlag]="editBookForm.get('book.price')"
               type="text"
               class="form-control"
               id="price"
@@ -40,18 +47,23 @@
               required
             />
             <span class="input-group-text">MAD</span>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">please provide a valid price</div>
           </div>
         </div>
         <div class="mb-3">
           <label class="form-label" for="datecreation">Date Création :</label>
           <div class="input-group">
             <input
+              [setValidFlag]="editBookForm.get('book.dateCreation')"
               type="date"
               id="datecreation"
               class="form-control"
               placeholder="Select Date"
               formControlName="dateCreation"
             />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">please provide a valid date</div>
           </div>
         </div>
         <div class="mb-3">
@@ -60,11 +72,14 @@
           >
           <div class="input-group">
             <input
+              [setValidFlag]="editBookForm.get('book.datePublication')"
               type="date"
               id="datepublication"
               class="form-control"
               formControlName="datePublication"
             />
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">please provide a valid date</div>
           </div>
         </div>
       </div>
@@ -73,6 +88,7 @@
       <div class="mb-3">
         <label for="Author" class="form-label">Author :</label>
         <input
+          [setValidFlag]="editBookForm.get('authorName')"
           type="text"
           class="form-control"
           id="author"
@@ -88,10 +104,13 @@
             {{ authorname }}
           </mat-option>
         </mat-autocomplete>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">please provide a valid author</div>
       </div>
       <div class="mb-3">
-        <label for="author" class="form-label">Category :</label>
+        <label for="category" class="form-label">Category :</label>
         <input
+          [setValidFlag]="editBookForm.get('categoryName')"
           type="text"
           class="form-control"
           id="category"
@@ -108,22 +127,27 @@
             {{ categoryname }}</mat-option
           >
         </mat-autocomplete>
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">please provide a valid category</div>
       </div>
       <div class="mb-3 col-md-3">
         <label for="quantity" class="form-label">Quantité : </label>
         <input
+          [setValidFlag]="editBookForm.get('quantity')"
           type="number"
           min="0"
           class="form-control"
           id="quantity"
           formControlName="quantity"
         />
+        <div class="valid-feedback">Looks good!</div>
+        <div class="invalid-feedback">please provide a valid quantity</div>
       </div>
       <div class="mb-3 text-center">
         <button
           class="btn btn-success mx-2"
           type="submit"
-          [disabled]="editForm.invalid"
+          [disabled]="editBookForm.invalid"
         >
           Update Book
         </button>
