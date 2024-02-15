@@ -144,7 +144,11 @@
         <div class="invalid-feedback">Quantity is a required field</div>
       </div>
       <div class="mb-3 text-center">
-        <button class="btn btn-success mx-2" type="submit">
+        <button
+          class="btn btn-success mx-2"
+          type="submit"
+          [disabled]="addBookForm.invalid"
+        >
           Register Book
         </button>
         <button class="btn btn-danger" routerLink="/books">Cancel</button>

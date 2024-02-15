@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
-import { formatDate } from '@angular/common';
+import { DatePipe, formatDate } from '@angular/common';
 import { BookService } from '../services/book.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
@@ -18,6 +18,7 @@ export class AddBookComponent implements OnInit {
   category = new FormControl(null, Validators.required);
   authorFilteredOptions: Observable<string[]>;
   categoryFilteredOptions: Observable<string[]>;
+  currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
 
   addBookForm: FormGroup;
 
@@ -25,7 +26,8 @@ export class AddBookComponent implements OnInit {
     private sharedService: SharedDataService,
     private bookService: BookService,
     private route: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private datePipe: DatePipe
   ) {}
 
   openRegisterBookConfirmationDialog() {
@@ -62,8 +64,8 @@ export class AddBookComponent implements OnInit {
           null,
           Validators.pattern(new RegExp(/[+-]?([0-9]*[.])?[0-9]+/))
         ),
-        dateCreation: new FormControl(null, Validators.required),
-        datePublication: new FormControl(null, Validators.required),
+        dateCreation: new FormControl(this.currentDate, Validators.required),
+        datePublication: new FormControl(this.currentDate, Validators.required),
       }),
       authorName: this.author,
       categoryName: this.category,

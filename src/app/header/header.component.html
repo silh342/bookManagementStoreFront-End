@@ -24,9 +24,11 @@
       </div>
       <div class="navbar-divider"></div>
       <div class="navbar-nav ms-auto">
-        <a class="nav-link" routerLink="/auth/login">Login</a>
-        <a class="nav-link" routerLink="/auth/signup">Register</a>
-        <a class="nav-link">Logout</a>
+        <ng-container *ngIf="!currentUser">
+          <a class="nav-link" routerLink="/auth/login">Login</a>
+          <a class="nav-link" routerLink="/auth/signup">Register</a>
+        </ng-container>
+        <a class="nav-link" *ngIf="currentUser" (click)="logout()">Logout</a>
       </div>
     </div>
   </div>

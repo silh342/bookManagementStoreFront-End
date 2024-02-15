@@ -4,7 +4,7 @@ import { Category } from '../models/category';
 import { AuthorService } from '../services/author.service';
 import { CategoryService } from '../services/category.service';
 import { FormControl } from '@angular/forms';
-import { map, startWith } from 'rxjs';
+import { forkJoin, map, startWith } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class SharedDataService {
@@ -16,14 +16,21 @@ export class SharedDataService {
   ) {}
 
   shareData() {
-    this.authorService.getAllAuthors().subscribe((authors) => {
-      this.authorOptions = authors.map((author) => author.fullName);
+    return forkJoin({
+      authors: this.authorService.getAllAuthors(),
+      categories: this.categoryService.getAllCategories(),
     });
-    this.categoryService.getAllCategories().subscribe((categories) => {
-      this.categoryOptions = categories.map(
-        (category) => category.categoryName
-      );
-    });
+    /*.subscribe({
+      next: ({ authors, categories }) => {
+        this.authorOptions = authors.map((author) => author.fullName);
+        this.categoryOptions = categories.map(
+          (category) => category.categoryName
+        );
+      },
+      error: (error) => {
+        console.error('Error Fetching the Data from the back end', error);
+      },
+    });*/
   }
 
   fillAutocomplete(

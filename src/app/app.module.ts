@@ -18,7 +18,7 @@ import { ShowBookComponent } from './book/show-book/show-book.component';
 import { EditBookComponent } from './book/edit-book/edit-book.component';
 import { EditStockComponent } from './book/edit-stock/edit-stock.component';
 import { AddBookComponent } from './book/add-book/add-book.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
@@ -29,6 +29,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { ErrorComponent } from './error/error.component';
 import { FlashComponent } from './flash/flash.component';
 import { ValidateInputDirective } from './directives/validate-input.directive';
+import { HttpInterceptorService } from './auth/http-interceptor.service';
 
 @NgModule({
   declarations: [
