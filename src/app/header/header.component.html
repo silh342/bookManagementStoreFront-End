@@ -14,21 +14,24 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" routerLinkActive="active" routerLink="/">Home</a>
+        <li routerLinkActive="active">
+          <a class="nav-link" routerLink="/">Home</a>
+        </li>
         <ng-container *ngIf="currentUser">
-          <a class="nav-link" routerLinkActive="active" routerLink="/books"
-            >Books</a
-          >
-          <a class="nav-link" routerLinkActive="active" routerLink="/authors"
-            >Authors</a
-          >
-          <a
-            *ngIf="isUserAuthorized()"
-            class="nav-link"
-            rourerLinkActive="active"
-            routerLink="/books/new"
-            >Add Book</a
-          >
+          <li routerLinkActive="active">
+            <a class="nav-link" routerLink="/books">Books</a>
+          </li>
+          <li routerLinkActive="active">
+            <a class="nav-link" routerLink="/authors">Authors</a>
+          </li>
+          <li rourerLinkActive="active">
+            <a
+              *ngIf="isUserAuthorized()"
+              class="nav-link"
+              routerLink="/books/new"
+              >Add Book</a
+            >
+          </li>
         </ng-container>
       </div>
       <div class="navbar-divider"></div>

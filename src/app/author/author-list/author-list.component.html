@@ -1,5 +1,5 @@
 <!-- List of Authors -->
-<div class="my-5">
+<div class="my-5 vh-100">
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- Author name Column -->
     <ng-container matColumnDef="fullName">
@@ -37,6 +37,6 @@
     <tr mat-row *matRowDef="let row; columns: headers"></tr>
   </table>
 
-  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons>
+  <mat-paginator [pageSizeOptions]="[10, 5]" showFirstLastButtons>
   </mat-paginator>
 </div>
