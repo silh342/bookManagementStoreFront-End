@@ -24,7 +24,6 @@ export class ListBookComponent implements OnInit {
   ) {}
   ngOnInit(): void {
     this.listBooks$ = this.bookService.findAllBooks();
-    this.sharedService.shareData().subscribe();
   }
 
   selectSearch(data: Event): void {

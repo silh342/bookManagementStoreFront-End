@@ -29,11 +29,11 @@ const routes: Routes = [
       {
         path: '',
         component: ListBookComponent,
-        resolve: [autocompleResolver],
       },
       {
         path: 'new',
         component: AddBookComponent,
+        resolve: [autocompleResolver],
       },
       { path: ':id', component: ShowBookComponent },
       {

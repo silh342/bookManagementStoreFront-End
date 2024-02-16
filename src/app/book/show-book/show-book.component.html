@@ -1,32 +1,48 @@
-
 <div class="row my-5">
-    <div *ngIf="currentBook$ | async as currentBook" class="col-md-5 offset-3">
-        <div class="card mb-3">
-            <img src="/assets/images/book1.avif" alt="" class="card-img-top">
-            <div class="card-body">
-                <h5 class="card-title">
-                    {{ currentBook.title }}
-                </h5>
-                <p class="card-text">
-                    {{ currentBook.isbn }}
-                </p>
-            </div>
-            <ul class="list-group list-group-flush">
-                <li class="list-group-item text-muted"> {{ currentBook.category.categoryName }}</li>
-                <li class="list-group-item text-muted">Published by {{ currentBook.author.fullName }}</li>
-                <li class="list-group-item text-muted">
-                    {{ currentBook.dateCreation | date: "fullDate" }}
-                </li>
-                <li class="list-group-item">{{ currentBook.price }}  MAD</li>
-            </ul>
-            <div class="card-body">
-                    <button class="btn btn-info mx-2" [routerLink]="['/books', currentBook.bookId,'edit']">Edit</button>
-                    <!-- <button class="btn btn-secondary mx-2">Edit Stock</button> -->
-                    <button class="btn btn-danger" (click)="openDeleteConfirmationDialog(currentBook.bookId)">Delete</button>
-            </div>
-            <div class="card-footer text-muted">
-                2 days ago
-            </div>
-        </div>
+  <div *ngIf="currentBook$ | async as currentBook" class="col-md-5 offset-3">
+    <div class="card mb-3">
+      <img src="/assets/images/book1.avif" alt="" class="card-img-top" />
+      <div class="card-body">
+        <h5 class="card-title">
+          {{ currentBook.title }}
+        </h5>
+        <p class="card-text">
+          {{ currentBook.isbn }}
+        </p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item text-muted">
+          {{ currentBook.category.categoryName }}
+        </li>
+        <li class="list-group-item text-muted">
+          Published by {{ currentBook.author.fullName }}
+        </li>
+        <li class="list-group-item text-muted">
+          {{ currentBook.dateCreation | date : "fullDate" }}
+        </li>
+        <li class="list-group-item">{{ currentBook.price }} MAD</li>
+      </ul>
+      <div class="card-body">
+        <button
+          *ngIf="
+            activeUser.role.includes('ROLE_USER') ||
+            activeUser.role.includes('ROLE_ADMIN')
+          "
+          class="btn btn-info mx-2"
+          [routerLink]="['/books', currentBook.bookId, 'edit']"
+        >
+          Edit
+        </button>
+        <!-- <button class="btn btn-secondary mx-2">Edit Stock</button> -->
+        <button
+          *ngIf="activeUser.role.includes('ROLE_ADMIN')"
+          class="btn btn-danger"
+          (click)="openDeleteConfirmationDialog(currentBook.bookId)"
+        >
+          Delete
+        </button>
+      </div>
+      <div class="card-footer text-muted">2 days ago</div>
     </div>
+  </div>
 </div>

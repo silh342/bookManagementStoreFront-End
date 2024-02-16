@@ -45,16 +45,18 @@ export class AddBookComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authorFilteredOptions = this.sharedService.fillAutocomplete(
-      this.author,
-      this.sharedService,
-      'author'
-    );
-    this.categoryFilteredOptions = this.sharedService.fillAutocomplete(
-      this.category,
-      this.sharedService,
-      'category'
-    );
+    this.sharedService.shareData().subscribe((res) => {
+      this.authorFilteredOptions = this.sharedService.fillAutocomplete(
+        this.author,
+        this.sharedService,
+        'author'
+      );
+      this.categoryFilteredOptions = this.sharedService.fillAutocomplete(
+        this.category,
+        this.sharedService,
+        'category'
+      );
+    });
 
     this.addBookForm = new FormGroup({
       book: new FormGroup({

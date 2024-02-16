@@ -1,6 +1,6 @@
 export interface decodedToken {
   sub: string;
-  roles: Set<string>;
+  roles: Array<string>;
   exp: number;
   iat: number;
 }

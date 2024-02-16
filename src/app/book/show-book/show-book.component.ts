@@ -5,6 +5,8 @@ import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { AuthService } from 'src/app/auth/auth.service';
+import { User } from 'src/app/auth/model/user';
 
 @Component({
   selector: 'app-show-book',
@@ -15,11 +17,13 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   paramSubscription: Subscription;
   currentBook$: Observable<Book>;
   deleteBook$: Observable<void>;
+  activeUser: User;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
     private router: Router,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private authService: AuthService
   ) {}
 
   openDeleteConfirmationDialog(id: number) {
@@ -39,6 +43,7 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.activeUser = this.authService.ActiveUser;
     this.paramSubscription = this.route.params.subscribe(() => {
       const bookId = +this.route.snapshot.paramMap.get('id');
       this.currentBook$ = this.bookService.findBook(bookId);

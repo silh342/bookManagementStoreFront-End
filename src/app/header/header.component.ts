@@ -17,6 +17,12 @@ export class HeaderComponent implements OnInit {
     this.authService.user.subscribe((user) => (this.currentUser = user));
   }
 
+  isUserAuthorized(): boolean {
+    return ['ROLE_USER', 'ROLE_ADMIN'].some((role) =>
+      this.currentUser.role.includes(role)
+    );
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/']);
