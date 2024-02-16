@@ -33,6 +33,10 @@ import { HttpInterceptorService } from './auth/http-interceptor.service';
 import { AuthorComponent } from './author/author.component';
 import { AuthorListComponent } from './author/author-list/author-list.component';
 import { EditAuthorComponent } from './author/edit-author/edit-author.component';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatIconModule } from '@angular/material/icon';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -70,6 +74,11 @@ import { EditAuthorComponent } from './author/edit-author/edit-author.component'
     MatAutocompleteModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatButtonModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatTableModule,
+    MatSortModule,
     NgxPaginationModule,
   ],
   providers: [DatePipe],

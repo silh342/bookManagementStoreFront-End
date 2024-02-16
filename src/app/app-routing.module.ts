@@ -54,6 +54,7 @@ const routes: Routes = [
   {
     path: 'authors',
     component: AuthorComponent,
+    canActivateChild: [authGuardFn],
     children: [
       { path: '', component: AuthorListComponent },
       { path: ':id', component: EditAuthorComponent },
