@@ -1,15 +1,24 @@
 import { Injectable, OnInit } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  Subject,
+  catchError,
+  map,
+  throwError,
+} from 'rxjs';
 import { User } from './model/user';
 import { HttpClient } from '@angular/common/http';
 import { JwtResponse } from './model/jwtResponse';
 import { backend } from 'src/environments/environement';
 import { jwtDecode } from 'jwt-decode';
 import { decodedToken } from './model/decodedToken';
+import { ErrorTemplate } from '../error/error';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user: BehaviorSubject<User> = new BehaviorSubject(null);
+  authError: Subject<ErrorTemplate> = new Subject();
   ActiveUser: User = null;
   constructor(private http: HttpClient) {}
 
@@ -42,13 +51,17 @@ export class AuthService {
             password,
           };
           this.user.next(this.ActiveUser);
+          this.authError.next(null);
           return token;
         }),
         catchError((err) =>
           throwError(() => {
             this.user.next(null);
             this.ActiveUser = null;
-            console.log('Error Logging you in', err);
+            this.authError.next({
+              title: 'Error Logging you in',
+              stack: 'Bad Credentials',
+            });
           })
         )
       );
