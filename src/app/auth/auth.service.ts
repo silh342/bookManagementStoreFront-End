@@ -46,7 +46,8 @@ export class AuthService {
         }),
         catchError((err) =>
           throwError(() => {
-            this.user = null;
+            this.user.next(null);
+            this.ActiveUser = null;
             console.log('Error Logging you in', err);
           })
         )
