@@ -14,10 +14,13 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
       <div class="navbar-nav">
-        <a class="nav-link" rourerLinkActive="active" routerLink="/">Home</a>
+        <a class="nav-link" routerLinkActive="active" routerLink="/">Home</a>
         <ng-container *ngIf="currentUser">
-          <a class="nav-link" rourerLinkActive="active" routerLink="/books"
+          <a class="nav-link" routerLinkActive="active" routerLink="/books"
             >Books</a
+          >
+          <a class="nav-link" routerLinkActive="active" routerLink="/authors"
+            >Authors</a
           >
           <a
             *ngIf="isUserAuthorized()"

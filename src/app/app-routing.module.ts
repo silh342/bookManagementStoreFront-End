@@ -15,6 +15,9 @@ import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { authGuardFn } from './auth/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './auth/http-interceptor.service';
+import { AuthorComponent } from './author/author.component';
+import { AuthorListComponent } from './author/author-list/author-list.component';
+import { EditAuthorComponent } from './author/edit-author/edit-author.component';
 
 const routes: Routes = [
   {
@@ -46,6 +49,14 @@ const routes: Routes = [
         component: EditStockComponent,
         canActivate: [authGuardFn],
       },
+    ],
+  },
+  {
+    path: 'authors',
+    component: AuthorComponent,
+    children: [
+      { path: '', component: AuthorListComponent },
+      { path: ':id', component: EditAuthorComponent },
     ],
   },
   {

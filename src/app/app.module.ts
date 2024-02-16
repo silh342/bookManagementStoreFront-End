@@ -30,6 +30,9 @@ import { ErrorComponent } from './error/error.component';
 import { FlashComponent } from './flash/flash.component';
 import { ValidateInputDirective } from './directives/validate-input.directive';
 import { HttpInterceptorService } from './auth/http-interceptor.service';
+import { AuthorComponent } from './author/author.component';
+import { AuthorListComponent } from './author/author-list/author-list.component';
+import { EditAuthorComponent } from './author/edit-author/edit-author.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +53,9 @@ import { HttpInterceptorService } from './auth/http-interceptor.service';
     ErrorComponent,
     FlashComponent,
     ValidateInputDirective,
+    AuthorComponent,
+    AuthorListComponent,
+    EditAuthorComponent,
   ],
   imports: [
     BrowserModule,
