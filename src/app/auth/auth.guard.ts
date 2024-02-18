@@ -7,6 +7,7 @@ import {
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
 import { map, of, take } from 'rxjs';
+import { User } from './model/user';
 
 export const authGuardFn: CanActivateFn = (
   route: ActivatedRouteSnapshot,
@@ -14,10 +15,15 @@ export const authGuardFn: CanActivateFn = (
 ) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  return of(authService.ActiveUser).pipe(
-    take(1),
-    map((user) => {
-      if (user) return true;
+  return of(authService.isAuthenticated()).pipe(
+    map((isAuth) => {
+      if (isAuth) {
+        const authenticatedUser: User = authService.getUserFromToken(
+          sessionStorage.getItem('user_token')
+        );
+        authService.user.next(authenticatedUser);
+        return true;
+      }
       return router.createUrlTree(['/auth/login']);
     })
   );

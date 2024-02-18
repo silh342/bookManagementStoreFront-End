@@ -18,15 +18,15 @@ export class HttpInterceptorService implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     if (!(request.url.includes('login') || request.url.includes('register'))) {
-      const username: string = this.authService.ActiveUser.username;
-      const password: string = this.authService.ActiveUser.password;
-      let basicAuthHeader: string = 'Basic ' + btoa(username + ':' + password);
-      const transformedRequest = request.clone({
-        setHeaders: {
-          Authorization: basicAuthHeader,
-        },
-      });
-      return next.handle(transformedRequest);
+      let authToken = sessionStorage.getItem('user_token');
+      if (authToken) {
+        const transformedRequest = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${authToken}`,
+          },
+        });
+        return next.handle(transformedRequest);
+      }
     }
     return next.handle(request);
   }

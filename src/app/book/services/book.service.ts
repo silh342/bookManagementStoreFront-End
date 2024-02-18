@@ -4,6 +4,7 @@ import { Book } from '../models/book';
 import { Observable, map } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { BookRequestBody } from '../models/bookRequestBody';
+import { Inventory } from '../models/inventory';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
@@ -16,6 +17,7 @@ export class BookService {
   findBook(id: number): Observable<Book> {
     return this.http.get<Book>(backend.url + '/books/' + id);
   }
+
   findBookByCategory(categoryName: string): Observable<Book[]> {
     return this.http.get<Book[]>(
       backend.url + '/books/category/' + categoryName

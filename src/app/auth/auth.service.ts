@@ -19,7 +19,6 @@ import { ErrorTemplate } from '../error/error';
 export class AuthService {
   user: BehaviorSubject<User> = new BehaviorSubject(null);
   authError: Subject<ErrorTemplate> = new Subject();
-  ActiveUser: User = null;
   constructor(private http: HttpClient) {}
 
   getUserFromToken(token: string): User {
@@ -28,11 +27,16 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    const decodedToken: decodedToken = jwtDecode(
-      sessionStorage.getItem('user_token')
-    );
-    const currentTime = Math.floor(Date.now() / 1000);
-    return decodedToken && decodedToken.exp < currentTime ? false : true;
+    if (sessionStorage.getItem('user_token')) {
+      const decodedToken: decodedToken = jwtDecode(
+        sessionStorage.getItem('user_token')
+      );
+      const currentTime = Math.floor(Date.now() / 1000);
+      console.log(decodedToken && decodedToken.exp < currentTime);
+      return decodedToken && decodedToken.exp < currentTime ? false : true;
+    }
+
+    return false;
   }
 
   singUp() {}
@@ -46,18 +50,12 @@ export class AuthService {
       .pipe(
         map((token: JwtResponse) => {
           sessionStorage.setItem('user_token', token.accessToken);
-          this.ActiveUser = {
-            ...this.getUserFromToken(token.accessToken),
-            password,
-          };
-          this.user.next(this.ActiveUser);
+          this.user.next(this.getUserFromToken(token.accessToken));
           this.authError.next(null);
           return token;
         }),
         catchError((err) =>
           throwError(() => {
-            this.user.next(null);
-            this.ActiveUser = null;
             this.authError.next({
               title: 'Error Logging you in',
               stack: 'Bad Credentials',
@@ -70,6 +68,5 @@ export class AuthService {
   logout(): void {
     sessionStorage.removeItem('user_token');
     this.user.next(null);
-    this.ActiveUser = null;
   }
 }
