@@ -17,20 +17,45 @@
         <li routerLinkActive="active">
           <a class="nav-link" routerLink="/">Home</a>
         </li>
+        <!-- <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Dropdown
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><hr class="dropdown-divider" /></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </li> -->
         <ng-container *ngIf="currentUser">
-          <li routerLinkActive="active">
-            <a class="nav-link" routerLink="/books">Books</a>
+          <li routerLinkActive="active" class="nav-item dropdown">
+            <a
+              class="nav-link dropdown-toggle"
+              role="button"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
+            >
+              Books
+            </a>
+            <ul class="dropdown-menu">
+              <li rourerLinkActive="active">
+                <a class="dropdown-item" routerLink="/books">List Books</a>
+              </li>
+              <li><hr class="dropdown-divider" /></li>
+              <li *ngIf="isUserAuthorized()" rourerLinkActive="active">
+                <a class="dropdown-item" routerLink="/books/new">Add Book</a>
+              </li>
+            </ul>
           </li>
           <li routerLinkActive="active">
             <a class="nav-link" routerLink="/authors">Authors</a>
-          </li>
-          <li rourerLinkActive="active">
-            <a
-              *ngIf="isUserAuthorized()"
-              class="nav-link"
-              routerLink="/books/new"
-              >Add Book</a
-            >
           </li>
         </ng-container>
       </div>

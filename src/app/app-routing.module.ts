@@ -18,6 +18,7 @@ import { HttpInterceptorService } from './auth/http-interceptor.service';
 import { AuthorComponent } from './author/author.component';
 import { AuthorListComponent } from './author/author-list/author-list.component';
 import { EditAuthorComponent } from './author/edit-author/edit-author.component';
+import { loginGuard } from './auth/login.guard';
 
 const routes: Routes = [
   {
@@ -63,6 +64,7 @@ const routes: Routes = [
   {
     path: 'auth',
     component: AuthComponent,
+    canActivateChild: [loginGuard],
     children: [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },
