@@ -1,62 +1,96 @@
 <div class="row mt-5">
-    <div class="col-md-4 mb-2 d-flex">
-        <select class="form-select d-inline w-auto" 
-        #selectSearchOption (change)="selectSearch($event)">
-            <option value="all">All</option>
-            <option value="author">Author</option>
-            <option value="category">Category</option>
-          </select>
-          <ng-container *ngIf="searchInputHidden !== 'all'">
-            <input  type="text" class="form-control mx-2" #searchInput>
-            <button class="btn btn-outline-secondary" (click)="searchBooks()"><i class="bi bi-search"></i></button>
-        </ng-container>
-    </div>
-    <div class="col-md-2 offset-md-6 d-inline ">
-        <label class="form-label mx-1"> Sort : </label>
-        <select class="form-select d-inline w-auto" #selectSortOption (change)="sortBooks($event)">
-            <option value=" "> </option>
-            <option value="asc">A-Z</option>
-            <option value="desc">Z-A</option>
-          </select>
-    </div>
+  <div class="col-md-4 mb-2 d-flex">
+    <select
+      class="form-select d-inline w-auto"
+      #selectSearchOption
+      (change)="selectSearch($event)"
+    >
+      <option value="all">All</option>
+      <option value="author">Author</option>
+      <option value="category">Category</option>
+    </select>
+    <ng-container *ngIf="searchInputHidden !== 'all'">
+      <input type="text" class="form-control mx-2" #searchInput />
+      <button class="btn btn-outline-secondary" (click)="searchBooks()">
+        <i class="bi bi-search"></i>
+      </button>
+    </ng-container>
+  </div>
+  <div class="col-md-2 offset-md-6">
+    <label class="form-label mx-1"> Sort : </label>
+    <select
+      class="form-select d-inline w-auto"
+      #selectSortOption
+      (change)="sortBooks($event)"
+    >
+      <option value=" "></option>
+      <option value="asc">A-Z</option>
+      <option value="desc">Z-A</option>
+    </select>
+  </div>
 </div>
 
-<div class="row">    
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th>#</th>
-                <th></th>
-                <th>Title</th>
-                <th>ISBN</th>
-                <th>Price</th>
-                <th>Quantity</th>
-                <th>Author</th>
-                <th>Category</th>
-                <th>Date Creation</th>
-                <th>Date Publication</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let book of listBooks$ | async
-                 | paginate : {itemsPerPage: itemsPerPage, currentPage: currentPage};let i=index">
-                <td><b>{{i + 1}}</b></td>
-                <td> 
-                    <button class="btn btn-outline-secondary" [routerLink]="['/books', book.bookId]"> 
-                         <i class="bi bi-eye"></i> </button>
-                </td>
-                <td> {{ book.title }} </td>
-                <td> {{ book.isbn }} </td>
-                <td> {{ book.price }} </td>
-                <td> {{ book.inventory.quantity }} </td>
-                <td> {{ book.author.fullName }} </td>
-                <td> {{ book.category.categoryName }} </td>
-                <td> {{ book.dateCreation | date: 'fullDate' }}</td>
-                <td> {{ book.datePublication | date: 'fullDate'}} </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center">
-        <pagination-controls (pageChange)="currentPage = $event"></pagination-controls>
-    </div>
+<div class="row">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th></th>
+        <th>Title</th>
+        <th>ISBN</th>
+        <th>Price</th>
+        <th>Quantity</th>
+        <th>Author</th>
+        <th>Category</th>
+        <th>Date Creation</th>
+        <th>Date Publication</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        *ngFor="
+          let book of listBooks$
+            | async
+            | paginate
+              : { itemsPerPage: itemsPerPage, currentPage: currentPage };
+          let i = index
+        "
+      >
+        <td>
+          <b>{{ i + 1 }}</b>
+        </td>
+        <td>
+          <button
+            class="btn btn-outline-secondary"
+            [routerLink]="['/books', book.bookId]"
+          >
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.price }}</td>
+        <td>
+          {{ book.inventory.quantity }}
+          <ng-container *ngIf="book.inventory.quantity < 5">
+            <i
+              class="bi bi-exclamation-circle-fill text-danger"
+              matTooltip="Low Inventory"
+              matTooltipPosition="above"
+            >
+            </i>
+          </ng-container>
+        </td>
+        <td>{{ book.author.fullName }}</td>
+        <td>{{ book.category.categoryName }}</td>
+        <td>{{ book.dateCreation | date : "fullDate" }}</td>
+        <td>{{ book.datePublication | date : "fullDate" }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="d-flex justify-content-center">
+    <pagination-controls
+      (pageChange)="currentPage = $event"
+    ></pagination-controls>
+  </div>
 </div>

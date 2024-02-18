@@ -4,9 +4,10 @@ import { Observable, Subscription } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/auth.service';
 import { User } from 'src/app/auth/model/user';
+import { EditStockComponent } from '../edit-stock/edit-stock.component';
 
 @Component({
   selector: 'app-show-book',
@@ -16,6 +17,7 @@ import { User } from 'src/app/auth/model/user';
 export class ShowBookComponent implements OnInit, OnDestroy {
   paramSubscription: Subscription;
   currentBook$: Observable<Book>;
+  currentBookId: number;
   deleteBook$: Observable<void>;
   activeUser: User;
   constructor(
@@ -42,11 +44,30 @@ export class ShowBookComponent implements OnInit, OnDestroy {
     });
   }
 
+  showEditStockDialog() {
+    this.bookService.findBook(this.currentBookId).subscribe((foundBook) => {
+      const editStockDialog = this.dialog.open(EditStockComponent, {
+        width: '700px',
+        height: '350',
+        data: {
+          book: foundBook,
+        },
+      });
+      editStockDialog.afterClosed().subscribe((res) => {
+        if (res) {
+          this.router.navigate(['/books', this.currentBookId]);
+        }
+      });
+    });
+  }
+
   ngOnInit(): void {
-    this.activeUser = this.authService.ActiveUser;
+    this.activeUser =
+      this.authService.getUserFromToken(sessionStorage.getItem('user_token')) ||
+      null;
     this.paramSubscription = this.route.params.subscribe(() => {
-      const bookId = +this.route.snapshot.paramMap.get('id');
-      this.currentBook$ = this.bookService.findBook(bookId);
+      this.currentBookId = +this.route.snapshot.paramMap.get('id');
+      this.currentBook$ = this.bookService.findBook(this.currentBookId);
     });
   }
 

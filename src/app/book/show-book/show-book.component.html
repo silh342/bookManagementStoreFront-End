@@ -12,28 +12,43 @@
       </div>
       <ul class="list-group list-group-flush">
         <li class="list-group-item text-muted">
+          <i class="bi bi-tag-fill"></i>
           {{ currentBook.category.categoryName }}
         </li>
         <li class="list-group-item text-muted">
-          Published by {{ currentBook.author.fullName }}
+          <i class="bi bi-person-fill"></i>
+          {{ currentBook.author.fullName }}
         </li>
         <li class="list-group-item text-muted">
+          <i class="bi bi-calendar2-week-fill"></i>
           {{ currentBook.dateCreation | date : "fullDate" }}
         </li>
-        <li class="list-group-item">{{ currentBook.price }} MAD</li>
+        <li class="list-group-item">
+          <i class="bi bi-currency-dollar"></i>
+          {{ currentBook.price }}
+        </li>
       </ul>
       <div class="card-body">
-        <button
+        <ng-container
           *ngIf="
             activeUser.role.includes('ROLE_USER') ||
             activeUser.role.includes('ROLE_ADMIN')
           "
-          class="btn btn-info mx-2"
-          [routerLink]="['/books', currentBook.bookId, 'edit']"
         >
-          Edit
-        </button>
-        <!-- <button class="btn btn-secondary mx-2">Edit Stock</button> -->
+          <button
+            class="btn btn-info mx-2"
+            [routerLink]="['/books', currentBook.bookId, 'edit']"
+          >
+            Edit
+          </button>
+          <button
+            class="btn btn-secondary mx-2"
+            (click)="showEditStockDialog()"
+          >
+            Edit Stock
+          </button>
+        </ng-container>
+
         <button
           *ngIf="activeUser.role.includes('ROLE_ADMIN')"
           class="btn btn-danger"

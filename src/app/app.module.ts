@@ -24,10 +24,9 @@ import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ConfirmationDialogComponent } from './book/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ValidateInputDirective } from './directives/validate-input.directive';
-import { HttpInterceptorService } from './auth/http-interceptor.service';
 import { AuthorComponent } from './author/author.component';
 import { AuthorListComponent } from './author/author-list/author-list.component';
 import { EditAuthorComponent } from './author/edit-author/edit-author.component';
@@ -35,6 +34,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
 
 @NgModule({
   declarations: [
@@ -69,6 +69,7 @@ import { MatSortModule } from '@angular/material/sort';
     BrowserAnimationsModule,
     MatAutocompleteModule,
     MatDatepickerModule,
+    MatTooltipModule,
     MatNativeDateModule,
     MatButtonModule,
     MatIconModule,

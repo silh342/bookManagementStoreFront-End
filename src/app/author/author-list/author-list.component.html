@@ -1,5 +1,19 @@
 <!-- List of Authors -->
 <div class="my-5 vh-100">
+  <h3 class="text-center mb-3">List Authors</h3>
+  <div class="d-flex justify-content-between mb-2">
+    <input
+      class="form-control d-inline w-auto"
+      type="text"
+      id="search"
+      placeholder="Search Author"
+    />
+
+    <button mat-mini-fab color="primary" aria-label="Add Author">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
   <table mat-table [dataSource]="dataSource" matSort>
     <!-- Author name Column -->
     <ng-container matColumnDef="fullName">

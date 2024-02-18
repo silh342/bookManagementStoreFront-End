@@ -1,8 +1,16 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  OnInit,
+  QueryList,
+  ViewChild,
+  ViewChildren,
+} from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
-import { Observable, catchError, map, throwError } from 'rxjs';
-import { SharedDataService } from '../shared/sharedData.service';
+import { Observable, catchError, throwError } from 'rxjs';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-list-book',
@@ -18,10 +26,8 @@ export class ListBookComponent implements OnInit {
   selectSearchOption: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
 
-  constructor(
-    private bookService: BookService,
-    private sharedService: SharedDataService
-  ) {}
+  constructor(private bookService: BookService) {}
+
   ngOnInit(): void {
     this.listBooks$ = this.bookService.findAllBooks();
   }

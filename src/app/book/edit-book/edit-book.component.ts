@@ -7,7 +7,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-edit-book',

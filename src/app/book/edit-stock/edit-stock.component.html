@@ -1,1 +1,33 @@
-<p>edit-stock works!</p>
+<!-- Dialog for Editing Stock -->
+<div class="container">
+  <h2>Edit Stock</h2>
+  <div class="row">
+    <div class="my-3">
+      <label for="name" class="form-label"
+        >Book Title : {{ data.book.title }}</label
+      >
+    </div>
+
+    <div class="mb-3 d-flex">
+      <label for="description" class="form-label mx-1"
+        >quantity available :</label
+      >
+      <input
+        type="number"
+        id="quantity"
+        min="0"
+        class="form-control w-auto"
+        [value]="data.book.inventory.quantity"
+        #quantity
+      />
+    </div>
+    <div class="modal-footer mb-3">
+      <button type="button" class="btn btn-danger mx-1" (click)="onDiscard()">
+        Discard Changes
+      </button>
+      <button type="button" class="btn btn-success mx-1" (click)="onSave()">
+        Save Changes
+      </button>
+    </div>
+  </div>
+</div>
