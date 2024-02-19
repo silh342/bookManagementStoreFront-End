@@ -32,7 +32,6 @@ export class AuthService {
         sessionStorage.getItem('user_token')
       );
       const currentTime = Math.floor(Date.now() / 1000);
-      console.log(decodedToken && decodedToken.exp < currentTime);
       return decodedToken && decodedToken.exp < currentTime ? false : true;
     }
 
