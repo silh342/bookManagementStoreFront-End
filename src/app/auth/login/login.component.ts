@@ -3,6 +3,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 import { ErrorTemplate } from 'src/app/error/error';
+import { ErrorHandlerService } from 'src/app/errorHandler.service';
 
 @Component({
   selector: 'app-login',
@@ -10,14 +11,13 @@ import { ErrorTemplate } from 'src/app/error/error';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  error: ErrorTemplate = null;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private errorService: ErrorHandlerService
+  ) {}
 
-  ngOnInit(): void {
-    this.authService.authError.subscribe((err) => {
-      this.error = err;
-    });
-  }
+  ngOnInit(): void {}
 
   onSubmit(loginForm: NgForm) {
     this.authService

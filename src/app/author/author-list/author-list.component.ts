@@ -9,6 +9,8 @@ import { MatDialog } from '@angular/material/dialog';
 import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ErrorHandlerService } from '../../errorHandler.service';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-author-list',
@@ -24,14 +26,18 @@ export class AuthorListComponent implements OnInit {
   constructor(
     private authorService: AuthorService,
     private matDialog: MatDialog,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
-    this.authorService.getAllAuthors().subscribe((authors) => {
-      this.dataSource = new MatTableDataSource<Author>(authors);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.authorService.getAllAuthors().subscribe({
+      next: (authors) => {
+        this.dataSource = new MatTableDataSource<Author>(authors);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      },
+      error: (err) => console.log(err),
     });
   }
 

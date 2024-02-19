@@ -20,6 +20,7 @@ import { AuthorListComponent } from './author/author-list/author-list.component'
 import { EditAuthorComponent } from './author/edit-author/edit-author.component';
 import { loginGuard } from './auth/login.guard';
 import { homeGuardFn } from './auth/home.guard';
+import { isUserAuthorized } from './auth/isUserAuthorized.guard';
 
 const routes: Routes = [
   {
@@ -39,18 +40,19 @@ const routes: Routes = [
       {
         path: 'new',
         component: AddBookComponent,
+        canActivate: [isUserAuthorized],
         resolve: [autocompleResolver],
       },
       { path: ':id', component: ShowBookComponent },
       {
         path: ':id/edit',
         component: EditBookComponent,
-        canActivate: [authGuardFn],
+        canActivate: [authGuardFn, isUserAuthorized],
       },
       {
         path: ':id/editstock',
         component: EditStockComponent,
-        canActivate: [authGuardFn],
+        canActivate: [authGuardFn, isUserAuthorized],
       },
     ],
   },
@@ -58,10 +60,7 @@ const routes: Routes = [
     path: 'authors',
     component: AuthorComponent,
     canActivateChild: [authGuardFn],
-    children: [
-      { path: '', component: AuthorListComponent },
-      { path: ':id', component: EditAuthorComponent },
-    ],
+    children: [{ path: '', component: AuthorListComponent }],
   },
   {
     path: 'auth',

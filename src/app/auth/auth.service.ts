@@ -1,10 +1,12 @@
-import { Injectable, OnInit } from '@angular/core';
+import { ErrorHandler, Injectable, OnInit } from '@angular/core';
 import {
   BehaviorSubject,
   Observable,
   Subject,
   catchError,
+  exhaustMap,
   map,
+  tap,
   throwError,
 } from 'rxjs';
 import { User } from './model/user';
@@ -14,16 +16,23 @@ import { backend } from 'src/environments/environement';
 import { jwtDecode } from 'jwt-decode';
 import { decodedToken } from './model/decodedToken';
 import { ErrorTemplate } from '../error/error';
+import { ErrorHandlerService } from '../errorHandler.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user: BehaviorSubject<User> = new BehaviorSubject(null);
-  authError: Subject<ErrorTemplate> = new Subject();
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private errorService: ErrorHandlerService
+  ) {}
 
   getUserFromToken(token: string): User {
     const decodedToken: decodedToken = jwtDecode(token);
     return new User(decodedToken.sub, decodedToken.roles);
+  }
+
+  isUserAuthorized(roles: string[], user: User): boolean {
+    return roles.some((role) => user.role.includes(role));
   }
 
   isAuthenticated(): boolean {
@@ -47,18 +56,15 @@ export class AuthService {
         password,
       })
       .pipe(
-        map((token: JwtResponse) => {
+        tap((token: JwtResponse) => {
           sessionStorage.setItem('user_token', token.accessToken);
           this.user.next(this.getUserFromToken(token.accessToken));
-          this.authError.next(null);
+          this.errorService.errorMessage.next(null);
           return token;
         }),
         catchError((err) =>
           throwError(() => {
-            this.authError.next({
-              title: 'Error Logging you in',
-              stack: 'Bad Credentials',
-            });
+            this.errorService.errorMessage.next('Bad Credentials');
           })
         )
       );

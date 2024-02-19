@@ -18,8 +18,9 @@ export class HeaderComponent implements OnInit {
   }
 
   isUserAuthorized(): boolean {
-    return ['ROLE_USER', 'ROLE_ADMIN'].some((role) =>
-      this.currentUser.role.includes(role)
+    return this.authService.isUserAuthorized(
+      ['ROLE_USER', 'ROLE_ADMIN'],
+      this.currentUser
     );
   }
 
