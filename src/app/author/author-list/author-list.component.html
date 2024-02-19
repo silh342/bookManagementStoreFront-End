@@ -37,7 +37,12 @@
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell *matCellDef="let element">
-        <button mat-mini-fab color="primary" aria-label="Edit Author">
+        <button
+          mat-mini-fab
+          color="primary"
+          aria-label="Edit Author"
+          (click)="openDialogEditAuthor(element)"
+        >
           <mat-icon>edit</mat-icon>
         </button>
         <button mat-mini-fab color="warn" aria-label="Delete Author">

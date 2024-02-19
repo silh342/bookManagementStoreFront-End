@@ -34,7 +34,9 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
-import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 @NgModule({
   declarations: [
@@ -67,7 +69,9 @@ import { MatTooltip, MatTooltipModule } from '@angular/material/tooltip';
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    MatFormFieldModule,
     MatAutocompleteModule,
+    MatInputModule,
     MatDatepickerModule,
     MatTooltipModule,
     MatNativeDateModule,

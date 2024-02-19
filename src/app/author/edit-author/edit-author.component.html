@@ -1,0 +1,35 @@
+<!--Edit Author Dialog -->
+<div class="dialog-container">
+  <h2 mat-dialog-title>{{ data.title }}</h2>
+  <mat-dialog-content>
+    <form #editAuthorForm="ngForm">
+      <p>
+        <mat-form-field>
+          <mat-label>Name</mat-label>
+          <input
+            matInput
+            name="fullName"
+            [ngModel]="currentAuthor.fullName"
+            required
+          />
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <textarea
+            matInput
+            name="description"
+            [ngModel]="currentAuthor.description"
+          ></textarea>
+        </mat-form-field>
+      </p>
+    </form>
+  </mat-dialog-content>
+  <mat-dialog-actions class="dialog-actions">
+    <button mat-button color="primary" (click)="onSave(editAuthorForm.value)">
+      Save Changes
+    </button>
+    <button mat-button color="warn" (click)="onDiscard()">Discard</button>
+  </mat-dialog-actions>
+</div>

@@ -33,8 +33,7 @@ export class EditStockComponent {
       categoryName: this.data.book.category.categoryName,
       quantity: this.quantityInput.nativeElement.value,
     };
-    this.bookService.editBook(reqBody.book.bookId, reqBody).subscribe((res) => {
-      console.log(res);
+    this.bookService.editBook(reqBody.book.bookId, reqBody).subscribe(() => {
       this.dialogRef.close(true);
     });
   }

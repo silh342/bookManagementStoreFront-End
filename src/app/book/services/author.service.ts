@@ -11,4 +11,10 @@ export class AuthorService {
   getAllAuthors(): Observable<Author[]> {
     return this.http.get<Author[]>(backend.url + '/authors');
   }
+  editAuthor(author: Author): Observable<Author> {
+    return this.http.put<Author>(backend.url + '/authors', {
+      ...author,
+      books: [],
+    });
+  }
 }
