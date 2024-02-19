@@ -11,11 +11,7 @@ import { ErrorHandlerService } from 'src/app/errorHandler.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private errorService: ErrorHandlerService
-  ) {}
+  constructor(private authService: AuthService, private router: Router) {}
 
   ngOnInit(): void {}
 
