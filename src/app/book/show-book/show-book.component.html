@@ -28,26 +28,22 @@
           {{ currentBook.price }}
         </li>
       </ul>
-      <div class="card-body">
-        <ng-container
-          *ngIf="
-            activeUser.role.includes('ROLE_USER') ||
-            activeUser.role.includes('ROLE_ADMIN')
-          "
+      <div
+        class="card-body"
+        *ngIf="
+          activeUser.role.includes('ROLE_USER') ||
+          activeUser.role.includes('ROLE_ADMIN')
+        "
+      >
+        <button
+          class="btn btn-info mx-2"
+          [routerLink]="['/books', currentBook.bookId, 'edit']"
         >
-          <button
-            class="btn btn-info mx-2"
-            [routerLink]="['/books', currentBook.bookId, 'edit']"
-          >
-            Edit
-          </button>
-          <button
-            class="btn btn-secondary mx-2"
-            (click)="showEditStockDialog()"
-          >
-            Edit Stock
-          </button>
-        </ng-container>
+          Edit
+        </button>
+        <button class="btn btn-secondary mx-2" (click)="showEditStockDialog()">
+          Edit Stock
+        </button>
 
         <button
           *ngIf="activeUser.role.includes('ROLE_ADMIN')"

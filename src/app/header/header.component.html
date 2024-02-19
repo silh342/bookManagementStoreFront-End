@@ -48,10 +48,12 @@
               <li rourerLinkActive="active">
                 <a class="dropdown-item" routerLink="/books">List Books</a>
               </li>
-              <li><hr class="dropdown-divider" /></li>
-              <li *ngIf="isUserAuthorized()" rourerLinkActive="active">
-                <a class="dropdown-item" routerLink="/books/new">Add Book</a>
-              </li>
+              <ng-container *ngIf="isUserAuthorized()">
+                <li><hr class="dropdown-divider" /></li>
+                <li rourerLinkActive="active">
+                  <a class="dropdown-item" routerLink="/books/new">Add Book</a>
+                </li>
+              </ng-container>
             </ul>
           </li>
           <li routerLinkActive="active">
@@ -65,7 +67,10 @@
           <a class="nav-link" routerLink="/auth/login">Login</a>
           <a class="nav-link" routerLink="/auth/signup">Register</a>
         </ng-container>
-        <a class="nav-link" *ngIf="currentUser" (click)="logout()">Logout</a>
+        <ng-container *ngIf="currentUser">
+          <i class="nav-link bi bi-person-check"> {{ currentUser.username }}</i>
+          <a class="nav-link" (click)="logout()">Logout</a>
+        </ng-container>
       </div>
     </div>
   </div>
