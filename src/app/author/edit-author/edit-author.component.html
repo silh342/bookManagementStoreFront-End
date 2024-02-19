@@ -9,7 +9,7 @@
           <input
             matInput
             name="fullName"
-            [ngModel]="currentAuthor.fullName"
+            [ngModel]="currentAuthor?.fullName"
             required
           />
         </mat-form-field>
@@ -20,7 +20,8 @@
           <textarea
             matInput
             name="description"
-            [ngModel]="currentAuthor.description"
+            rows="5"
+            [ngModel]="currentAuthor?.description"
           ></textarea>
         </mat-form-field>
       </p>

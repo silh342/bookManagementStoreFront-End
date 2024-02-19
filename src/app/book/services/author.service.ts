@@ -17,4 +17,11 @@ export class AuthorService {
       books: [],
     });
   }
+  addAuthor(author: Author): Observable<Author> {
+    return this.http.post<Author>(backend.url + '/authors', { ...author });
+  }
+
+  deleteAuthor(id: number): Observable<any> {
+    return this.http.delete(backend.url + '/authors/' + id);
+  }
 }

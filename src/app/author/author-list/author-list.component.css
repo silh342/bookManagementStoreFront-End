@@ -1,0 +1,6 @@
+.description-column {
+  max-width: 150px; /* Adjust the value as needed */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

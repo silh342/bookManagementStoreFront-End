@@ -8,6 +8,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-author-list',
@@ -34,17 +35,76 @@ export class AuthorListComponent implements OnInit {
     });
   }
 
+  reloadData(): void {
+    this.ngOnInit();
+    this.router.navigate(['/authors']);
+  }
+
   openDialogEditAuthor(element: Author) {
+    console.log(element);
     const editAuthorDialog = this.matDialog.open(EditAuthorComponent, {
       width: '400px',
       data: {
+        operation: 'edit',
         title: 'Edit Author',
         author: element,
       },
     });
 
     editAuthorDialog.afterClosed().subscribe((res) => {
-      if (res) this.router.navigate(['/authors']);
+      if (res) this.reloadData();
     });
+  }
+
+  openDialogAddAuthor() {
+    const addAuthor = this.matDialog.open(EditAuthorComponent, {
+      width: '400px',
+      data: { operation: 'add', title: 'Add New Author' },
+    });
+
+    addAuthor.afterClosed().subscribe((res) => {
+      if (res) this.reloadData();
+    });
+  }
+
+  openDialogDeleteAuthor(id: number) {
+    const deleteAuthor = this.matDialog.open(ConfirmationDialogComponent, {
+      data: {
+        title: 'Delete Author',
+        message: 'Do you confirm the deletion of this author ?',
+      },
+    });
+
+    deleteAuthor.afterClosed().subscribe((res) => {
+      if (res) {
+        this.authorService.deleteAuthor(id).subscribe({
+          next: () => this.reloadData(),
+        });
+      }
+    });
+  }
+
+  applyFilter(filterValue: string) {
+    filterValue = filterValue.toLowerCase().trim();
+    this.dataSource.filter = filterValue;
+
+    // Highlighting the seached text
+    // const searchRegex = new RegExp(filterValue, 'gi');
+    // const rows = document.querySelectorAll('[mat-row]');
+    // console.log(searchRegex, rows);
+    // rows.forEach((row) => {
+    //   const columns = Array.from(
+    //     document.querySelectorAll('.mat-column-fullName')
+    //   );
+    //   columns.shift();
+    //   columns.forEach((col) => {
+    //     const columnText = col.textContent || '';
+    //     console.log(columnText);
+    //     col.innerHTML = columnText.replace(
+    //       searchRegex,
+    //       (match) => `<mark class="highlight">${match}</mark>`
+    //     );
+    //   });
+    // });
   }
 }

@@ -18,7 +18,8 @@ import { AuthorService } from 'src/app/book/services/author.service';
 export class EditAuthorComponent implements OnInit {
   currentAuthor: Author;
   constructor(
-    @Inject(MAT_DIALOG_DATA) public data: { title: string; author: Author },
+    @Inject(MAT_DIALOG_DATA)
+    public data: { operation: string; title: string; author: Author },
     private authorService: AuthorService,
     public dialogRef: MatDialogRef<EditAuthorComponent>
   ) {}
@@ -28,13 +29,17 @@ export class EditAuthorComponent implements OnInit {
   }
 
   onSave(formData: Author) {
-    this.currentAuthor.fullName = formData.fullName;
-    this.currentAuthor.description = formData.description;
-    console.log(this.currentAuthor);
-    this.authorService.editAuthor(this.currentAuthor).subscribe((res) => {
-      console.log(res);
-      this.dialogRef.close(true);
-    });
+    if (this.data.operation.startsWith('edit')) {
+      this.currentAuthor.fullName = formData.fullName;
+      this.currentAuthor.description = formData.description;
+      this.authorService.editAuthor(this.currentAuthor).subscribe(() => {
+        this.dialogRef.close(true);
+      });
+    } else if (this.data.operation.startsWith('add')) {
+      this.authorService.addAuthor(formData).subscribe(() => {
+        this.dialogRef.close(true);
+      });
+    }
   }
 
   onDiscard() {
