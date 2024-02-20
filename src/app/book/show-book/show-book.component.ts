@@ -5,7 +5,7 @@ import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { EditStockComponent } from '../edit-stock/edit-stock.component';
 

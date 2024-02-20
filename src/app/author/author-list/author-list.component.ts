@@ -10,7 +10,8 @@ import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { ErrorHandlerService } from '../../errorHandler.service';
-import { AuthService } from 'src/app/auth/auth.service';
+import { AuthService } from 'src/app/auth/services/auth.service';
+import { User } from 'src/app/auth/model/user';
 
 @Component({
   selector: 'app-author-list',
@@ -20,6 +21,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class AuthorListComponent implements OnInit {
   headers: string[] = ['fullName', 'description', 'actions'];
   dataSource: MatTableDataSource<Author>;
+  currentUser: User;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -30,7 +32,12 @@ export class AuthorListComponent implements OnInit {
     private authService: AuthService
   ) {}
 
+  isUserEligible(roles: string[]): boolean {
+    return this.authService.isUserAuthorized(roles, this.currentUser);
+  }
+
   ngOnInit(): void {
+    this.authService.user.subscribe((user) => (this.currentUser = user));
     this.authorService.getAllAuthors().subscribe({
       next: (authors) => {
         this.dataSource = new MatTableDataSource<Author>(authors);
@@ -93,24 +100,25 @@ export class AuthorListComponent implements OnInit {
   applyFilter(filterValue: string) {
     filterValue = filterValue.toLowerCase().trim();
     this.dataSource.filter = filterValue;
-
-    // Highlighting the seached text
-    // const searchRegex = new RegExp(filterValue, 'gi');
-    // const rows = document.querySelectorAll('[mat-row]');
-    // console.log(searchRegex, rows);
-    // rows.forEach((row) => {
-    //   const columns = Array.from(
-    //     document.querySelectorAll('.mat-column-fullName')
-    //   );
-    //   columns.shift();
-    //   columns.forEach((col) => {
-    //     const columnText = col.textContent || '';
-    //     console.log(columnText);
-    //     col.innerHTML = columnText.replace(
-    //       searchRegex,
-    //       (match) => `<mark class="highlight">${match}</mark>`
+    // if (filterValue !== '') {
+    //   // Highlighting the seached text
+    //   const searchRegex = new RegExp(filterValue, 'gi');
+    //   const rows = document.querySelectorAll('[mat-row]');
+    //   console.log(searchRegex, rows);
+    //   rows.forEach((row) => {
+    //     const columns = Array.from(
+    //       document.querySelectorAll('.mat-column-fullName')
     //     );
+    //     columns.shift();
+    //     columns.forEach((col) => {
+    //       const columnText = col.textContent || '';
+    //       console.log(columnText);
+    //       col.innerHTML = columnText.replace(
+    //         searchRegex,
+    //         (match) => `<mark class="highlight">${match}</mark>`
+    //       );
+    //     });
     //   });
-    // });
+    // }
   }
 }

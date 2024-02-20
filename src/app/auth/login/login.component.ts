@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { AuthService } from '../auth.service';
+import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { ErrorTemplate } from 'src/app/error/error';
 import { ErrorHandlerService } from 'src/app/errorHandler.service';
