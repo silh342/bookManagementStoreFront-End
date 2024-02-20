@@ -5,10 +5,10 @@ import {
   RouterStateSnapshot,
 } from '@angular/router';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from '../services/auth.service';
 import { map, of, take } from 'rxjs';
-import { User } from './model/user';
-import { ErrorHandlerService } from '../errorHandler.service';
+import { User } from '../model/user';
+import { ErrorHandlerService } from '../../errorHandler.service';
 
 export const isUserAuthorized: CanActivateFn = (
   route: ActivatedRouteSnapshot,

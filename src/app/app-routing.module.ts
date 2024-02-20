@@ -12,15 +12,15 @@ import { autocompleResolver } from './book/autocomplete.resolver';
 import { AuthComponent } from './auth/auth.component';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { authGuardFn } from './auth/auth.guard';
+import { authGuardFn } from './auth/guards/auth.guard';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
-import { HttpInterceptorService } from './auth/http-interceptor.service';
+import { HttpInterceptorService } from './auth/services/http-interceptor.service';
 import { AuthorComponent } from './author/author.component';
 import { AuthorListComponent } from './author/author-list/author-list.component';
 import { EditAuthorComponent } from './author/edit-author/edit-author.component';
-import { loginGuard } from './auth/login.guard';
-import { homeGuardFn } from './auth/home.guard';
-import { isUserAuthorized } from './auth/isUserAuthorized.guard';
+import { loginGuard } from './auth/guards/login.guard';
+import { homeGuardFn } from './auth/guards/home.guard';
+import { isUserAuthorized } from './auth/guards/isUserAuthorized.guard';
 
 const routes: Routes = [
   {
@@ -70,6 +70,10 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },
     ],
+  },
+  {
+    path: '**',
+    redirectTo: '',
   },
 ];
 

@@ -9,14 +9,15 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { User } from './model/user';
-import { HttpClient } from '@angular/common/http';
-import { JwtResponse } from './model/jwtResponse';
+import { User } from '../model/user';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { JwtResponse } from '../model/jwtResponse';
 import { backend } from 'src/environments/environement';
 import { jwtDecode } from 'jwt-decode';
-import { decodedToken } from './model/decodedToken';
-import { ErrorTemplate } from '../error/error';
-import { ErrorHandlerService } from '../errorHandler.service';
+import { decodedToken } from '../model/decodedToken';
+import { ErrorTemplate } from '../../error/error';
+import { ErrorHandlerService } from '../../errorHandler.service';
+import { registerUser } from '../model/registerUser';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
@@ -47,7 +48,24 @@ export class AuthService {
     return false;
   }
 
-  singUp() {}
+  singUp(user: registerUser): Observable<string> {
+    return this.http
+      .post(
+        backend.url + '/auth/register',
+        {
+          ...user,
+          roleNames: ['ROLE_USER'],
+        },
+        { responseType: 'text' }
+      )
+      .pipe(
+        catchError((error) =>
+          throwError(() =>
+            this.errorService.errorMessage.next('Error registering the user')
+          )
+        )
+      );
+  }
 
   login(username: string, password: string): Observable<JwtResponse> {
     return this.http
@@ -71,7 +89,7 @@ export class AuthService {
   }
 
   logout(): void {
-    sessionStorage.removeItem('user_token');
     this.user.next(null);
+    sessionStorage.removeItem('user_token');
   }
 }
