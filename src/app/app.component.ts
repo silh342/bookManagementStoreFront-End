@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { SharedDataService } from './book/shared/sharedData.service';
 import { MessageLoggingService } from './utils/messageLogging.service';
 import { ErrorTemplate } from './utils/error/error';
 

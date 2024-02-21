@@ -17,7 +17,6 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { HttpInterceptorService } from './auth/services/http-interceptor.service';
 import { AuthorComponent } from './author/author.component';
 import { AuthorListComponent } from './author/author-list/author-list.component';
-import { EditAuthorComponent } from './author/edit-author/edit-author.component';
 import { loginGuard } from './auth/guards/login.guard';
 import { homeGuardFn } from './auth/guards/home.guard';
 import { isUserAuthorized } from './auth/guards/isUserAuthorized.guard';

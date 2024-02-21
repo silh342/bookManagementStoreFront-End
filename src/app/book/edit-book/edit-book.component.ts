@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
-import { Book } from '../models/book';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
 import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
@@ -111,7 +110,7 @@ export class EditBookComponent implements OnInit {
     this.bookService
       .editBook(this.currentBookId, this.editBookForm.value)
       .subscribe({
-        next: (value) => {
+        next: () => {
           this.logger.successMessage.next({
             message: 'Book Updated Successfully !',
           });

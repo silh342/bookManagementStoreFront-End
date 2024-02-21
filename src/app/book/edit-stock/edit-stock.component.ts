@@ -1,14 +1,5 @@
-import {
-  Component,
-  ElementRef,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, ElementRef, Inject, ViewChild } from '@angular/core';
 import { BookService } from '../services/book.service';
-import { Observable, map } from 'rxjs';
-import { Inventory } from '../models/inventory';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Book } from '../models/book';
 import { BookRequestBody } from '../models/bookRequestBody';

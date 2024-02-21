@@ -3,11 +3,9 @@ import {
   ElementRef,
   HostListener,
   Input,
-  OnChanges,
   OnInit,
-  SimpleChanges,
 } from '@angular/core';
-import { AbstractControl, NgControl } from '@angular/forms';
+import { AbstractControl } from '@angular/forms';
 
 @Directive({
   selector: '[setValidFlag]',

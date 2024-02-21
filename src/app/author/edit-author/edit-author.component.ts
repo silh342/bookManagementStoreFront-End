@@ -35,17 +35,17 @@ export class EditAuthorComponent implements OnInit {
       this.currentAuthor.fullName = formData.fullName;
       this.currentAuthor.description = formData.description;
       this.authorService.editAuthor(this.currentAuthor).subscribe(() => {
+        this.dialogRef.close(true);
         this.logger.successMessage.next({
           message: 'Author Updated Successfully! ',
         });
-        this.dialogRef.close(true);
       });
     } else if (this.data.operation.startsWith('add')) {
       this.authorService.addAuthor(formData).subscribe(() => {
+        this.dialogRef.close(true);
         this.logger.successMessage.next({
           message: 'Author Created Successfully! ',
         });
-        this.dialogRef.close(true);
       });
     }
   }

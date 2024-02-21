@@ -1,16 +1,7 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  OnInit,
-  QueryList,
-  ViewChild,
-  ViewChildren,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { Observable, catchError, throwError } from 'rxjs';
-import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-list-book',

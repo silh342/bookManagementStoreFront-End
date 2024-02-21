@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Book } from '../models/book';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, throwError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { BookRequestBody } from '../models/bookRequestBody';
-import { Inventory } from '../models/inventory';
 import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })

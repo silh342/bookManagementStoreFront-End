@@ -76,10 +76,10 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   deleteBook(id: number): void {
     this.bookService.deleteBook(id).subscribe({
       next: () => {
+        this.router.navigate(['/books']);
         this.logger.successMessage.next({
           message: 'Book Deleted Successfully !',
         });
-        this.router.navigate(['/books']);
       },
     });
   }

@@ -1,6 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Author } from '../models/author';
-import { Category } from '../models/category';
 import { AuthorService } from '../../author/services/author.service';
 import { CategoryService } from '../services/category.service';
 import { FormControl } from '@angular/forms';
@@ -20,17 +18,6 @@ export class SharedDataService {
       authors: this.authorService.getAllAuthors(),
       categories: this.categoryService.getAllCategories(),
     });
-    /*.subscribe({
-      next: ({ authors, categories }) => {
-        this.authorOptions = authors.map((author) => author.fullName);
-        this.categoryOptions = categories.map(
-          (category) => category.categoryName
-        );
-      },
-      error: (error) => {
-        console.error('Error Fetching the Data from the back end', error);
-      },
-    });*/
   }
 
   fillAutocomplete(
