@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
 import { DatePipe, formatDate } from '@angular/common';
 import { BookService } from '../services/book.service';
@@ -14,12 +14,13 @@ import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
   templateUrl: './add-book.component.html',
   styleUrls: ['./add-book.component.css'],
 })
-export class AddBookComponent implements OnInit {
+export class AddBookComponent implements OnInit, OnDestroy {
   author = new FormControl(null, Validators.required);
   category = new FormControl(null, Validators.required);
   authorFilteredOptions: Observable<string[]>;
   categoryFilteredOptions: Observable<string[]>;
   currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
+  bookSubscription: Subscription;
 
   addBookForm: FormGroup;
 
@@ -91,12 +92,18 @@ export class AddBookComponent implements OnInit {
       'en-US'
     );
     //TODO handle errors with a template for the errors
-    this.bookService.addBook(this.addBookForm.value).subscribe((res) => {
-      this.addBookForm.reset();
-      this.route.navigate(['/books']);
-      this.logger.successMessage.next({
-        message: 'Book Created Successfully !',
+    this.bookSubscription = this.bookService
+      .addBook(this.addBookForm.value)
+      .subscribe(() => {
+        this.addBookForm.reset();
+        this.route.navigate(['/books']);
+        this.logger.successMessage.next({
+          message: 'Book Created Successfully !',
+        });
       });
-    });
+  }
+
+  ngOnDestroy(): void {
+    this.bookSubscription.unsubscribe();
   }
 }

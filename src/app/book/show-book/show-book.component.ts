@@ -16,7 +16,7 @@ import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
   styleUrls: ['./show-book.component.css'],
 })
 export class ShowBookComponent implements OnInit, OnDestroy {
-  paramSubscription: Subscription;
+  subscription$: Subscription;
   currentBook$: Observable<Book>;
   currentBookId: number;
   deleteBook$: Observable<void>;
@@ -39,52 +39,60 @@ export class ShowBookComponent implements OnInit, OnDestroy {
       },
     });
 
-    deleteDialog.afterClosed().subscribe((result) => {
-      if (result) {
-        this.deleteBook(id);
-      }
-    });
+    this.subscription$.add(
+      deleteDialog.afterClosed().subscribe((result) => {
+        if (result) {
+          this.deleteBook(id);
+        }
+      })
+    );
   }
 
   showEditStockDialog() {
-    this.bookService.findBook(this.currentBookId).subscribe((foundBook) => {
-      const editStockDialog = this.dialog.open(EditStockComponent, {
-        width: '700px',
-        height: '350',
-        data: {
-          book: foundBook,
-        },
-      });
-      editStockDialog.afterClosed().subscribe((res) => {
-        if (res) {
-          this.router.navigate(['/books', this.currentBookId]);
-        }
-      });
-    });
+    this.subscription$.add(
+      this.bookService.findBook(this.currentBookId).subscribe((foundBook) => {
+        const editStockDialog = this.dialog.open(EditStockComponent, {
+          width: '700px',
+          height: '350',
+          data: {
+            book: foundBook,
+          },
+        });
+        editStockDialog.afterClosed().subscribe((res) => {
+          if (res) {
+            this.router.navigate(['/books', this.currentBookId]);
+          }
+        });
+      })
+    );
   }
 
   ngOnInit(): void {
     this.activeUser =
       this.authService.getUserFromToken(sessionStorage.getItem('user_token')) ||
       null;
-    this.paramSubscription = this.route.params.subscribe(() => {
-      this.currentBookId = +this.route.snapshot.paramMap.get('id');
-      this.currentBook$ = this.bookService.findBook(this.currentBookId);
-    });
+    this.subscription$.add(
+      this.route.params.subscribe(() => {
+        this.currentBookId = +this.route.snapshot.paramMap.get('id');
+        this.currentBook$ = this.bookService.findBook(this.currentBookId);
+      })
+    );
   }
 
   deleteBook(id: number): void {
-    this.bookService.deleteBook(id).subscribe({
-      next: () => {
-        this.router.navigate(['/books']);
-        this.logger.successMessage.next({
-          message: 'Book Deleted Successfully !',
-        });
-      },
-    });
+    this.subscription$.add(
+      this.bookService.deleteBook(id).subscribe({
+        next: () => {
+          this.router.navigate(['/books']);
+          this.logger.successMessage.next({
+            message: 'Book Deleted Successfully !',
+          });
+        },
+      })
+    );
   }
 
   ngOnDestroy(): void {
-    this.paramSubscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 }

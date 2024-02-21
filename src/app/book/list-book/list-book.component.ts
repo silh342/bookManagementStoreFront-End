@@ -48,27 +48,18 @@ export class ListBookComponent implements OnInit {
         if (this.searchInput.nativeElement.value === '') {
           this.listBooks$ = this.bookService.findAllBooks();
         } else {
-          this.listBooks$ = this.bookService
-            .findBookByAuthor(this.searchInput.nativeElement.value)
-            .pipe(
-              catchError((error) =>
-                throwError(() => console.log('Author Not Found', error))
-              )
-            );
+          this.listBooks$ = this.bookService.findBookByAuthor(
+            this.searchInput.nativeElement.value
+          );
         }
-
         break;
       case 'category':
         if (this.searchInput.nativeElement.value === '') {
           this.listBooks$ = this.bookService.findAllBooks();
         } else {
-          this.listBooks$ = this.bookService
-            .findBookByCategory(this.searchInput.nativeElement.value)
-            .pipe(
-              catchError((error) =>
-                throwError(() => console.log('Author Not Found', error))
-              )
-            );
+          this.listBooks$ = this.bookService.findBookByCategory(
+            this.searchInput.nativeElement.value
+          );
         }
         break;
     }

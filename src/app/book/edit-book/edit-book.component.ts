@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { DatePipe, formatDate } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
@@ -14,13 +14,14 @@ import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
   templateUrl: './edit-book.component.html',
   styleUrls: ['./edit-book.component.css'],
 })
-export class EditBookComponent implements OnInit {
+export class EditBookComponent implements OnInit, OnDestroy {
   author = new FormControl(null, Validators.required);
   category = new FormControl(null, Validators.required);
   currentBookId: number;
   authorFilteredOptions: Observable<string[]>;
   categoryFilteredOptions: Observable<string[]>;
   editBookForm: FormGroup;
+  subscription$: Subscription;
 
   constructor(
     private sharedService: SharedDataService,
@@ -41,40 +42,42 @@ export class EditBookComponent implements OnInit {
       },
     });
 
-    dialogReference.afterClosed().subscribe((answer) => {
-      if (answer) {
-        this.onSubmit();
-      } else {
-        console.log('Action Canceled');
-      }
-    });
+    this.subscription$.add(
+      dialogReference.afterClosed().subscribe((answer) => {
+        if (answer) this.onSubmit();
+      })
+    );
   }
 
   ngOnInit(): void {
-    this.route.params.subscribe(() => {
-      const bookId = +this.route.snapshot.paramMap.get('id');
-      this.bookService.findBook(bookId).subscribe((value) => {
-        this.currentBookId = value.bookId;
-        this.editBookForm.patchValue({
-          book: {
-            title: value.title,
-            isbn: value.isbn,
-            price: value.price,
-            dateCreation: this.datePipe.transform(
-              value.dateCreation,
-              'yyyy-MM-dd'
-            ),
-            datePublication: this.datePipe.transform(
-              value.datePublication,
-              'yyyy-MM-dd'
-            ),
-          },
-          authorName: value.author.fullName,
-          categoryName: value.category.categoryName,
-          quantity: value.inventory.quantity,
-        });
-      });
-    });
+    this.subscription$.add(
+      this.route.params.subscribe(() => {
+        const bookId = +this.route.snapshot.paramMap.get('id');
+        this.subscription$.add(
+          this.bookService.findBook(bookId).subscribe((value) => {
+            this.currentBookId = value.bookId;
+            this.editBookForm.patchValue({
+              book: {
+                title: value.title,
+                isbn: value.isbn,
+                price: value.price,
+                dateCreation: this.datePipe.transform(
+                  value.dateCreation,
+                  'yyyy-MM-dd'
+                ),
+                datePublication: this.datePipe.transform(
+                  value.datePublication,
+                  'yyyy-MM-dd'
+                ),
+              },
+              authorName: value.author.fullName,
+              categoryName: value.category.categoryName,
+              quantity: value.inventory.quantity,
+            });
+          })
+        );
+      })
+    );
 
     this.authorFilteredOptions = this.sharedService.fillAutocomplete(
       this.author,
@@ -105,17 +108,22 @@ export class EditBookComponent implements OnInit {
   }
 
   onSubmit(): void {
-    //TODO handle errors with a template for the errors
     this.editBookForm.value.bookId = this.currentBookId;
-    this.bookService
-      .editBook(this.currentBookId, this.editBookForm.value)
-      .subscribe({
-        next: () => {
-          this.logger.successMessage.next({
-            message: 'Book Updated Successfully !',
-          });
-          this.router.navigate(['/books', this.currentBookId]);
-        },
-      });
+    this.subscription$.add(
+      this.bookService
+        .editBook(this.currentBookId, this.editBookForm.value)
+        .subscribe({
+          next: () => {
+            this.logger.successMessage.next({
+              message: 'Book Updated Successfully !',
+            });
+            this.router.navigate(['/books', this.currentBookId]);
+          },
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subscription$.unsubscribe();
   }
 }

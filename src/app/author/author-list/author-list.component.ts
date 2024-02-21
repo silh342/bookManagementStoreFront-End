@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Author } from 'src/app/book/models/author';
 import { AuthorService } from 'src/app/author/services/author.service';
 import { MatTableDataSource } from '@angular/material/table';
@@ -10,16 +10,19 @@ import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/utils/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-author-list',
   templateUrl: './author-list.component.html',
   styleUrls: ['./author-list.component.css'],
 })
-export class AuthorListComponent implements OnInit {
+export class AuthorListComponent implements OnInit, OnDestroy {
   headers: string[] = ['fullName', 'description', 'actions'];
   dataSource: MatTableDataSource<Author>;
   currentUser: User;
+  userSubscription: Subscription;
+  authorSubscription: Subscription;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -35,8 +38,10 @@ export class AuthorListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.user.subscribe((user) => (this.currentUser = user));
-    this.authorService.getAllAuthors().subscribe({
+    this.userSubscription = this.authService.user.subscribe(
+      (user) => (this.currentUser = user)
+    );
+    this.authorSubscription = this.authorService.getAllAuthors().subscribe({
       next: (authors) => {
         this.dataSource = new MatTableDataSource<Author>(authors);
         this.dataSource.paginator = this.paginator;
@@ -118,5 +123,10 @@ export class AuthorListComponent implements OnInit {
     //     });
     //   });
     // }
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
+    this.authorSubscription.unsubscribe();
   }
 }
