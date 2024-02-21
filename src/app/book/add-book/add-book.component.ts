@@ -20,7 +20,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
   authorFilteredOptions: Observable<string[]>;
   categoryFilteredOptions: Observable<string[]>;
   currentDate = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
-  bookSubscription: Subscription;
+  bookSubscription: Subscription = new Subscription();
 
   addBookForm: FormGroup;
 

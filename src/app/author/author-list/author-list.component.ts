@@ -21,8 +21,7 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   headers: string[] = ['fullName', 'description', 'actions'];
   dataSource: MatTableDataSource<Author>;
   currentUser: User;
-  userSubscription: Subscription;
-  authorSubscription: Subscription;
+  subscription$: Subscription = new Subscription();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
@@ -38,17 +37,19 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user.subscribe(
-      (user) => (this.currentUser = user)
+    this.subscription$.add(
+      this.authService.user.subscribe((user) => (this.currentUser = user))
     );
-    this.authorSubscription = this.authorService.getAllAuthors().subscribe({
-      next: (authors) => {
-        this.dataSource = new MatTableDataSource<Author>(authors);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      },
-      error: (err) => console.log(err),
-    });
+    this.subscription$.add(
+      this.authorService.getAllAuthors().subscribe({
+        next: (authors) => {
+          this.dataSource = new MatTableDataSource<Author>(authors);
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+        },
+        error: (err) => console.log(err),
+      })
+    );
   }
 
   reloadData(): void {
@@ -57,7 +58,6 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   }
 
   openDialogEditAuthor(element: Author) {
-    console.log(element);
     const editAuthorDialog = this.matDialog.open(EditAuthorComponent, {
       width: '400px',
       data: {
@@ -67,9 +67,11 @@ export class AuthorListComponent implements OnInit, OnDestroy {
       },
     });
 
-    editAuthorDialog.afterClosed().subscribe((res) => {
-      if (res) this.reloadData();
-    });
+    this.subscription$.add(
+      editAuthorDialog.afterClosed().subscribe((res) => {
+        if (res) this.reloadData();
+      })
+    );
   }
 
   openDialogAddAuthor() {
@@ -78,9 +80,11 @@ export class AuthorListComponent implements OnInit, OnDestroy {
       data: { operation: 'add', title: 'Add New Author' },
     });
 
-    addAuthor.afterClosed().subscribe((res) => {
-      if (res) this.reloadData();
-    });
+    this.subscription$.add(
+      addAuthor.afterClosed().subscribe((res) => {
+        if (res) this.reloadData();
+      })
+    );
   }
 
   openDialogDeleteAuthor(id: number) {
@@ -91,13 +95,15 @@ export class AuthorListComponent implements OnInit, OnDestroy {
       },
     });
 
-    deleteAuthor.afterClosed().subscribe((res) => {
-      if (res) {
-        this.authorService.deleteAuthor(id).subscribe({
-          next: () => this.reloadData(),
-        });
-      }
-    });
+    this.subscription$.add(
+      deleteAuthor.afterClosed().subscribe((res) => {
+        if (res) {
+          this.authorService.deleteAuthor(id).subscribe({
+            next: () => this.reloadData(),
+          });
+        }
+      })
+    );
   }
 
   applyFilter(filterValue: string) {
@@ -126,7 +132,6 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
-    this.authorSubscription.unsubscribe();
+    this.subscription$.unsubscribe();
   }
 }

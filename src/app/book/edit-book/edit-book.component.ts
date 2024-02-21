@@ -21,7 +21,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   authorFilteredOptions: Observable<string[]>;
   categoryFilteredOptions: Observable<string[]>;
   editBookForm: FormGroup;
-  subscription$: Subscription;
+  subscription$: Subscription = new Subscription();
 
   constructor(
     private sharedService: SharedDataService,

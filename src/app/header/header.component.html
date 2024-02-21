@@ -68,6 +68,7 @@
           <a class="nav-link" routerLink="/auth/signup">Register</a>
         </ng-container>
         <ng-container *ngIf="currentUser">
+          <i class="bi bi-heart">favorites</i>
           <i class="nav-link bi bi-person-check"> {{ currentUser.username }}</i>
           <a class="nav-link" (click)="logout()">Logout</a>
         </ng-container>

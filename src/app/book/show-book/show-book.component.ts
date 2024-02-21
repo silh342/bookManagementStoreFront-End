@@ -16,7 +16,7 @@ import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
   styleUrls: ['./show-book.component.css'],
 })
 export class ShowBookComponent implements OnInit, OnDestroy {
-  subscription$: Subscription;
+  subscription$: Subscription = new Subscription();
   currentBook$: Observable<Book>;
   currentBookId: number;
   deleteBook$: Observable<void>;
