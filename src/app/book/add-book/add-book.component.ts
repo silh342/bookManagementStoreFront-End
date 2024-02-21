@@ -6,7 +6,8 @@ import { DatePipe, formatDate } from '@angular/common';
 import { BookService } from '../services/book.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
+import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Component({
   selector: 'app-add-book',
@@ -27,7 +28,8 @@ export class AddBookComponent implements OnInit {
     private bookService: BookService,
     private route: Router,
     private dialog: MatDialog,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private logger: MessageLoggingService
   ) {}
 
   openRegisterBookConfirmationDialog() {
@@ -90,8 +92,11 @@ export class AddBookComponent implements OnInit {
     );
     //TODO handle errors with a template for the errors
     this.bookService.addBook(this.addBookForm.value).subscribe((res) => {
-      this.route.navigate(['/books']);
       this.addBookForm.reset();
+      this.route.navigate(['/books']);
+      this.logger.successMessage.next({
+        message: 'Book Created Successfully !',
+      });
     });
   }
 }

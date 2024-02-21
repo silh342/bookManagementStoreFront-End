@@ -6,7 +6,8 @@
       class="mt-5 alert alert-success alert-dismissible fade show"
       role="alert"
     >
-      {{ success }}
+      <h4>{{ success.status }}</h4>
+      <p>{{ success.message }}</p>
       <button
         type="button"
         class="btn-close"
@@ -20,7 +21,8 @@
       class="mt-5 alert alert-danger alert-dismissible fade show"
       role="alert"
     >
-      {{ error }}
+      <h4>{{ error.status }}</h4>
+      <p>{{ error.message }}</p>
       <button
         type="button"
         class="btn-close"

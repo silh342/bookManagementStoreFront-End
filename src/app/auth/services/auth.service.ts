@@ -15,8 +15,7 @@ import { JwtResponse } from '../model/jwtResponse';
 import { backend } from 'src/environments/environement';
 import { jwtDecode } from 'jwt-decode';
 import { decodedToken } from '../model/decodedToken';
-import { ErrorTemplate } from '../../error/error';
-import { ErrorHandlerService } from '../../errorHandler.service';
+import { MessageLoggingService } from '../../utils/messageLogging.service';
 import { registerUser } from '../model/registerUser';
 
 @Injectable({ providedIn: 'root' })
@@ -24,7 +23,7 @@ export class AuthService {
   user: BehaviorSubject<User> = new BehaviorSubject(null);
   constructor(
     private http: HttpClient,
-    private errorService: ErrorHandlerService
+    private errorService: MessageLoggingService
   ) {}
 
   getUserFromToken(token: string): User {
@@ -59,10 +58,8 @@ export class AuthService {
         { responseType: 'text' }
       )
       .pipe(
-        catchError((error) =>
-          throwError(() =>
-            this.errorService.errorMessage.next('Error registering the user')
-          )
+        catchError((error: HttpErrorResponse) =>
+          throwError(() => this.errorService.errorMessage.next(error.error))
         )
       );
   }
@@ -80,9 +77,10 @@ export class AuthService {
           this.errorService.errorMessage.next(null);
           return token;
         }),
-        catchError((err) =>
+        catchError((err: HttpErrorResponse) =>
           throwError(() => {
-            this.errorService.errorMessage.next('Bad Credentials');
+            console.log(err);
+            this.errorService.errorMessage.next(err.error);
           })
         )
       );

@@ -24,7 +24,7 @@ import { DatePipe } from '@angular/common';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
-import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from './utils/confirmation-dialog/confirmation-dialog.component';
 import { MatButtonModule } from '@angular/material/button';
 import { ValidateInputDirective } from './directives/validate-input.directive';
 import { AuthorComponent } from './author/author.component';

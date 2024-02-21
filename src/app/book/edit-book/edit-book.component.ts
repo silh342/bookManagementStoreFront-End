@@ -7,7 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
+import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Component({
   selector: 'app-edit-book',
@@ -28,6 +29,7 @@ export class EditBookComponent implements OnInit {
     private dialog: MatDialog,
     private router: Router,
     private bookService: BookService,
+    private logger: MessageLoggingService,
     private datePipe: DatePipe
   ) {}
 
@@ -110,10 +112,11 @@ export class EditBookComponent implements OnInit {
       .editBook(this.currentBookId, this.editBookForm.value)
       .subscribe({
         next: (value) => {
-          console.log(value);
+          this.logger.successMessage.next({
+            message: 'Book Updated Successfully !',
+          });
           this.router.navigate(['/books', this.currentBookId]);
         },
-        error: (err) => console.log("Couldn't Update the book", err),
       });
   }
 }

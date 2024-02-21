@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Author } from '../models/author';
 import { Category } from '../models/category';
-import { AuthorService } from '../services/author.service';
+import { AuthorService } from '../../author/services/author.service';
 import { CategoryService } from '../services/category.service';
 import { FormControl } from '@angular/forms';
 import { forkJoin, map, startWith } from 'rxjs';

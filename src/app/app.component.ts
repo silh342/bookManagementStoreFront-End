@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedDataService } from './book/shared/sharedData.service';
-import { ErrorHandlerService } from './errorHandler.service';
+import { MessageLoggingService } from './utils/messageLogging.service';
+import { ErrorTemplate } from './utils/error/error';
 
 @Component({
   selector: 'app-root',
@@ -8,10 +9,10 @@ import { ErrorHandlerService } from './errorHandler.service';
   styleUrls: ['./app.component.css'],
 })
 export class AppComponent implements OnInit {
-  error: string;
-  success: string;
+  error: ErrorTemplate;
+  success: ErrorTemplate;
 
-  constructor(private errorService: ErrorHandlerService) {}
+  constructor(private errorService: MessageLoggingService) {}
 
   ngOnInit(): void {
     this.errorService.errorMessage.subscribe((err) => {

@@ -1,15 +1,14 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Author } from 'src/app/book/models/author';
-import { AuthorService } from 'src/app/book/services/author.service';
+import { AuthorService } from 'src/app/author/services/author.service';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
-import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
-import { ErrorHandlerService } from '../../errorHandler.service';
+import { ConfirmationDialogComponent } from 'src/app/utils/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 

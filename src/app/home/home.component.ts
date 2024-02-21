@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ErrorHandlerService } from '../errorHandler.service';
+import { MessageLoggingService } from '../utils/messageLogging.service';
 
 @Component({
   selector: 'app-home',
@@ -7,7 +7,7 @@ import { ErrorHandlerService } from '../errorHandler.service';
   styleUrls: ['./home.component.css'],
 })
 export class HomeComponent implements OnInit {
-  constructor(private errorService: ErrorHandlerService) {}
+  constructor(private errorService: MessageLoggingService) {}
 
   ngOnInit(): void {
     this.errorService.errorMessage.next(null);

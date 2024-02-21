@@ -8,7 +8,8 @@ import {
 } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Author } from 'src/app/book/models/author';
-import { AuthorService } from 'src/app/book/services/author.service';
+import { AuthorService } from 'src/app/author/services/author.service';
+import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Component({
   selector: 'app-edit-author',
@@ -21,6 +22,7 @@ export class EditAuthorComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA)
     public data: { operation: string; title: string; author: Author },
     private authorService: AuthorService,
+    private logger: MessageLoggingService,
     public dialogRef: MatDialogRef<EditAuthorComponent>
   ) {}
 
@@ -33,10 +35,16 @@ export class EditAuthorComponent implements OnInit {
       this.currentAuthor.fullName = formData.fullName;
       this.currentAuthor.description = formData.description;
       this.authorService.editAuthor(this.currentAuthor).subscribe(() => {
+        this.logger.successMessage.next({
+          message: 'Author Updated Successfully! ',
+        });
         this.dialogRef.close(true);
       });
     } else if (this.data.operation.startsWith('add')) {
       this.authorService.addAuthor(formData).subscribe(() => {
+        this.logger.successMessage.next({
+          message: 'Author Created Successfully! ',
+        });
         this.dialogRef.close(true);
       });
     }

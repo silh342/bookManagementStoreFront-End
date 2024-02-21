@@ -4,10 +4,11 @@ import { Observable, Subscription } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { EditStockComponent } from '../edit-stock/edit-stock.component';
+import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Component({
   selector: 'app-show-book',
@@ -25,7 +26,8 @@ export class ShowBookComponent implements OnInit, OnDestroy {
     private bookService: BookService,
     private router: Router,
     private dialog: MatDialog,
-    private authService: AuthService
+    private authService: AuthService,
+    private logger: MessageLoggingService
   ) {}
 
   openDeleteConfirmationDialog(id: number) {
@@ -73,12 +75,11 @@ export class ShowBookComponent implements OnInit, OnDestroy {
 
   deleteBook(id: number): void {
     this.bookService.deleteBook(id).subscribe({
-      next: (value) => {
-        console.log('Book Deleted Successfully', value);
+      next: () => {
+        this.logger.successMessage.next({
+          message: 'Book Deleted Successfully !',
+        });
         this.router.navigate(['/books']);
-      },
-      error: (err) => {
-        console.log('Error Deleting the Book', err);
       },
     });
   }
