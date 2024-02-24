@@ -13,7 +13,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./sign-up.component.css'],
 })
 export class SignUpComponent implements OnDestroy {
-  registerSubscription: Subscription;
+  registerSubscription: Subscription = new Subscription();
   constructor(
     private authService: AuthService,
     private errorService: MessageLoggingService,

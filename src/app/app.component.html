@@ -1,36 +1,6 @@
 <app-header></app-header>
 <div>
-  <div class="container">
-    <div
-      *ngIf="success"
-      class="mt-5 alert alert-success alert-dismissible fade show"
-      role="alert"
-    >
-      <h4>{{ success.status }}</h4>
-      <p>{{ success.message }}</p>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-
-    <div
-      *ngIf="error"
-      class="mt-5 alert alert-danger alert-dismissible fade show"
-      role="alert"
-    >
-      <h4>{{ error.status }}</h4>
-      <p>{{ error.message }}</p>
-      <button
-        type="button"
-        class="btn-close"
-        data-bs-dismiss="alert"
-        aria-label="Close"
-      ></button>
-    </div>
-  </div>
+  <app-error></app-error>
   <router-outlet></router-outlet>
 </div>
 <app-footer></app-footer>

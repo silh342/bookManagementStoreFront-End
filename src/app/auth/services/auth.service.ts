@@ -59,7 +59,9 @@ export class AuthService {
       )
       .pipe(
         catchError((error: HttpErrorResponse) =>
-          throwError(() => this.errorService.errorMessage.next(error.error))
+          throwError(() => {
+            this.errorService.errorMessage.next({ message: error.error });
+          })
         )
       );
   }
@@ -80,7 +82,10 @@ export class AuthService {
         catchError((err: HttpErrorResponse) =>
           throwError(() => {
             console.log(err);
-            this.errorService.errorMessage.next(err.error);
+            this.errorService.errorMessage.next({
+              status: 'UNAUTHORIZED ACCESS',
+              message: err.error.message,
+            });
           })
         )
       );
