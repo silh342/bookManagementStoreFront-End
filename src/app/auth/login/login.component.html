@@ -9,7 +9,7 @@
           <h5 class="card-title">Login</h5>
           <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
             <div class="mb-3">
-              <label for="username" class="form-label">Username :</label>
+              <label class="form-label">Username :</label>
               <input
                 type="text"
                 name="username"
@@ -20,7 +20,7 @@
               />
             </div>
             <div class="mb-3">
-              <label for="password" class="form-label">Password :</label>
+              <label class="form-label">Password :</label>
               <input
                 type="password"
                 name="password"
@@ -30,7 +30,9 @@
               />
             </div>
             <div class="d-grid gap-2 col- mx-auto">
-              <button class="btn btn-success">Login</button>
+              <button class="btn btn-success" [disabled]="loginForm.invalid">
+                Login
+              </button>
             </div>
           </form>
         </div>

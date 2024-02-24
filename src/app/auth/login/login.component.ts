@@ -10,7 +10,7 @@ import { Subscription } from 'rxjs';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnDestroy {
-  loginSubscription: Subscription;
+  loginSubscription: Subscription = new Subscription();
   constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit(loginForm: NgForm) {

@@ -37,6 +37,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { ReviewComponent } from './book/review/review.component';
+import { ErrorComponent } from './error/error.component';
 
 @NgModule({
   declarations: [
@@ -58,6 +60,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     AuthorComponent,
     AuthorListComponent,
     EditAuthorComponent,
+    ReviewComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
