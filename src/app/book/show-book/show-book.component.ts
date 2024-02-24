@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, map } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -21,6 +21,9 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   currentBookId: number;
   deleteBook$: Observable<void>;
   activeUser: User;
+  reviewLength: number;
+  viewsIncremented: boolean = false;
+  favoriteBtn: boolean = false;
   constructor(
     private route: ActivatedRoute,
     private bookService: BookService,
@@ -30,6 +33,9 @@ export class ShowBookComponent implements OnInit, OnDestroy {
     private logger: MessageLoggingService
   ) {}
 
+  updateReviews() {
+    this.currentBook$ = this.bookService.findBook(this.currentBookId);
+  }
   openDeleteConfirmationDialog(id: number) {
     const deleteDialog = this.dialog.open(ConfirmationDialogComponent, {
       width: '500px',
@@ -74,7 +80,20 @@ export class ShowBookComponent implements OnInit, OnDestroy {
     this.subscription$.add(
       this.route.params.subscribe(() => {
         this.currentBookId = +this.route.snapshot.paramMap.get('id');
-        this.currentBook$ = this.bookService.findBook(this.currentBookId);
+        this.currentBook$ = this.bookService.findBook(this.currentBookId).pipe(
+          map((book) => {
+            const userFavBook: boolean = book.likedByUsers.some(
+              (user) => user.username === this.activeUser.username
+            );
+            this.favoriteBtn = userFavBook ? true : false;
+            return book;
+          })
+        );
+        if (!this.viewsIncremented) {
+          this.bookService.incrementViews(this.currentBookId).subscribe(() => {
+            this.viewsIncremented = true;
+          });
+        }
       })
     );
   }
@@ -90,6 +109,21 @@ export class ShowBookComponent implements OnInit, OnDestroy {
         },
       })
     );
+  }
+
+  favoriteBtnClick() {
+    this.currentBook$ = this.bookService
+      .addBookToFavorites(
+        this.currentBookId,
+        this.activeUser.username,
+        this.favoriteBtn
+      )
+      .pipe(
+        map((res) => {
+          this.favoriteBtn = !this.favoriteBtn;
+          return res;
+        })
+      );
   }
 
   ngOnDestroy(): void {

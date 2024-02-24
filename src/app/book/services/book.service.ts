@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Book } from '../models/book';
-import { Observable, catchError, throwError } from 'rxjs';
+import { Observable, catchError, map, throwError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { BookRequestBody } from '../models/bookRequestBody';
 import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
@@ -16,6 +16,20 @@ export class BookService {
   // Search queries
   findAllBooks(): Observable<Book[]> {
     return this.http.get<Book[]>(backend.url + '/books');
+  }
+  incrementViews(id: number): Observable<Book> {
+    return this.http.get<Book>(backend.url + '/books/incrementViews/' + id);
+  }
+  addBookToFavorites(
+    bookId: number,
+    username: string,
+    addOrRemove: boolean
+  ): Observable<Book> {
+    return this.http.post<Book>(backend.url + '/books/favorite', {
+      bookId,
+      username,
+      addOrRemove,
+    });
   }
   findBook(id: number): Observable<Book> {
     return this.http.get<Book>(backend.url + '/books/' + id);

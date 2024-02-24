@@ -1,5 +1,5 @@
 <div class="row my-5">
-  <div *ngIf="currentBook$ | async as currentBook" class="col-md-5 offset-3">
+  <div *ngIf="currentBook$ | async as currentBook" class="col-md-6">
     <div class="card mb-3">
       <img src="/assets/images/book1.avif" alt="" class="card-img-top" />
       <div class="card-body">
@@ -28,32 +28,59 @@
           {{ currentBook.price }}
         </li>
       </ul>
-      <div
-        class="card-body"
-        *ngIf="
-          activeUser.role.includes('ROLE_USER') ||
-          activeUser.role.includes('ROLE_ADMIN')
-        "
-      >
-        <button
-          class="btn btn-info mx-2"
-          [routerLink]="['/books', currentBook.bookId, 'edit']"
+      <div class="card-body">
+        <ng-container
+          *ngIf="
+            activeUser.role.includes('ROLE_USER') ||
+            activeUser.role.includes('ROLE_ADMIN')
+          "
         >
-          Edit
-        </button>
-        <button class="btn btn-secondary mx-2" (click)="showEditStockDialog()">
-          Edit Stock
-        </button>
+          <button
+            class="btn btn-info mx-2"
+            [routerLink]="['/books', currentBook.bookId, 'edit']"
+          >
+            Edit
+          </button>
+          <button
+            class="btn btn-secondary mx-2"
+            (click)="showEditStockDialog()"
+          >
+            Edit Stock
+          </button>
+
+          <button
+            *ngIf="activeUser.role.includes('ROLE_ADMIN')"
+            class="btn btn-danger mx-2"
+            (click)="openDeleteConfirmationDialog(currentBook.bookId)"
+          >
+            Delete
+          </button>
+        </ng-container>
 
         <button
-          *ngIf="activeUser.role.includes('ROLE_ADMIN')"
-          class="btn btn-danger"
-          (click)="openDeleteConfirmationDialog(currentBook.bookId)"
+          class="btn btn-outline-success"
+          [ngClass]="{
+            'btn-outline-success': !favoriteBtn,
+            'btn-success': favoriteBtn
+          }"
+          (click)="favoriteBtnClick()"
         >
-          Delete
+          <i class="bi bi-suit-heart-fill"></i>
+          {{ favoriteBtn ? "Remove from favorites" : "Add to favorites" }}
         </button>
       </div>
-      <div class="card-footer text-muted">2 days ago</div>
+      <div class="card-footer">
+        <i class="bi bi-eye-fill">{{ currentBook.views }}</i>
+        <i class="bi bi-chat-dots mx-3">{{ currentBook.reviews.length }}</i>
+        <i class="bi bi-heart-fill">{{ currentBook.likedByUsers.length }}</i>
+      </div>
     </div>
+  </div>
+  <div class="col-md-6">
+    <app-review
+      [bookId]="currentBookId"
+      [activeUser]="activeUser"
+      (reviewListChanged)="updateReviews()"
+    ></app-review>
   </div>
 </div>
