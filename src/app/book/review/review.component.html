@@ -1,0 +1,111 @@
+<h2>Leave a Review</h2>
+<div>
+  <form
+    #addReviewForm="ngForm"
+    (ngSubmit)="submitReview(addReviewForm.value)"
+    class="mb-3"
+  >
+    <div class="form-group">
+      <div class="form-group mb-3">
+        <fieldset class="starability-basic">
+          <input
+            type="radio"
+            id="no-rate"
+            class="input-no-rate"
+            [(ngModel)]="rating"
+            name="rating"
+            value="0"
+            aria-label="No rating."
+          />
+          <input
+            type="radio"
+            id="first-rate1"
+            name="rating"
+            [(ngModel)]="rating"
+            value="1"
+          />
+          <label for="first-rate1" title="Terrible">1 star</label>
+          <input
+            type="radio"
+            id="first-rate2"
+            name="rating"
+            [(ngModel)]="rating"
+            value="2"
+          />
+          <label for="first-rate2" title="Not good">2 stars</label>
+          <input
+            type="radio"
+            id="first-rate3"
+            name="rating"
+            [(ngModel)]="rating"
+            value="3"
+          />
+          <label for="first-rate3" title="Average">3 stars</label>
+          <input
+            type="radio"
+            id="first-rate4"
+            name="rating"
+            [(ngModel)]="rating"
+            value="4"
+          />
+          <label for="first-rate4" title="Very good">4 stars</label>
+          <input
+            type="radio"
+            id="first-rate5"
+            name="rating"
+            [(ngModel)]="rating"
+            value="5"
+          />
+          <label for="first-rate5" title="Amazing">5 stars</label>
+        </fieldset>
+      </div>
+      <!-- <input
+        type="range"
+        id="rating"
+        class="form-control"
+        name="rating"
+        [(ngModel)]="rating"
+        min="0"
+        max="5"
+      /> -->
+    </div>
+    <div class="form-group mb-2">
+      <label class="form-label" for="body">Review :</label>
+      <textarea
+        class="form-control"
+        name="body"
+        ngModel
+        id="body"
+        cols="30"
+        rows="3"
+      ></textarea>
+    </div>
+    <button class="btn btn-success" [disabled]="addReviewForm.invalid">
+      Submit Review
+    </button>
+  </form>
+</div>
+<div class="row list-reviews">
+  <div class="card mb-3" *ngFor="let review of listReview$ | async">
+    <div class="card-body">
+      <h5 class="card-title">Rating: {{ review.rating }}</h5>
+      <p class="text-muted">By {{ review.reviewAuthor.username }}</p>
+      <p class="starability-result" [attr.data-rating]="review.rating">
+        Rated : {{ review.rating }} stars
+      </p>
+      <p class="card-text">Review : {{ review.body }}</p>
+      <!--If CurrentUser && review.author equals CurrentUser-->
+      <button
+        (click)="deleteReview(review.reviewId)"
+        *ngIf="
+          (activeUser &&
+            activeUser.username === review.reviewAuthor.username) ||
+          activeUser.role.includes('ROLE_ADMIN')
+        "
+        class="btn btn-sm btn-danger"
+      >
+        Delete
+      </button>
+    </div>
+  </div>
+</div>
