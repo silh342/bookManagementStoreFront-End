@@ -31,6 +31,11 @@ export class BookService {
       addOrRemove,
     });
   }
+  getFavoriteBooksByUser(username: string): Observable<Book[]> {
+    return this.http.get<Book[]>(
+      backend.url + '/books/favoritesbyuser/' + username
+    );
+  }
   findBook(id: number): Observable<Book> {
     return this.http.get<Book>(backend.url + '/books/' + id);
   }
