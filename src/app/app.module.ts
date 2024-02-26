@@ -39,6 +39,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReviewComponent } from './book/review/review.component';
 import { ErrorComponent } from './error/error.component';
+import { FavoriteComponent } from './book/favorite/favorite.component';
 
 @NgModule({
   declarations: [
@@ -62,6 +63,7 @@ import { ErrorComponent } from './error/error.component';
     EditAuthorComponent,
     ReviewComponent,
     ErrorComponent,
+    FavoriteComponent,
   ],
   imports: [
     BrowserModule,

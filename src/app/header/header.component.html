@@ -64,13 +64,27 @@
       <div class="navbar-divider"></div>
       <div class="navbar-nav ms-auto">
         <ng-container *ngIf="!currentUser">
-          <a class="nav-link" routerLink="/auth/login">Login</a>
-          <a class="nav-link" routerLink="/auth/signup">Register</a>
+          <a class="nav-link" routerLink="/auth/login"> Login</a>
+          <a class="nav-link" routerLink="/auth/signup">Register </a>
         </ng-container>
         <ng-container *ngIf="currentUser">
-          <i class="nav-link bi bi-star-fill">Favorites</i>
-          <i class="nav-link bi bi-person-check"> {{ currentUser.username }}</i>
-          <a class="nav-link" (click)="logout()">Logout</a>
+          <li>
+            <a
+              class="nav-link"
+              [routerLink]="['books/favorites', currentUser.username]"
+              ><i class="bi bi-star-fill">Favorites</i></a
+            >
+          </li>
+          <li>
+            <a class="nav-link"
+              ><i class="bi bi-person-check"> {{ currentUser.username }}</i></a
+            >
+          </li>
+          <li>
+            <a class="nav-link" (click)="logout()"
+              ><i class="bi bi-door-open-fill">Logout</i>
+            </a>
+          </li>
         </ng-container>
       </div>
     </div>

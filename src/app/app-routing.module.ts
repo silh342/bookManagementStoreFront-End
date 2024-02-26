@@ -20,6 +20,7 @@ import { AuthorListComponent } from './author/author-list/author-list.component'
 import { loginGuard } from './auth/guards/login.guard';
 import { homeGuardFn } from './auth/guards/home.guard';
 import { isUserAuthorized } from './auth/guards/isUserAuthorized.guard';
+import { FavoriteComponent } from './book/favorite/favorite.component';
 
 const routes: Routes = [
   {
@@ -42,11 +43,16 @@ const routes: Routes = [
         canActivate: [isUserAuthorized],
         resolve: [autocompleResolver],
       },
+      {
+        path: 'favorites/:username',
+        component: FavoriteComponent,
+      },
       { path: ':id', component: ShowBookComponent },
       {
         path: ':id/edit',
         component: EditBookComponent,
         canActivate: [authGuardFn, isUserAuthorized],
+        resolve: [autocompleResolver],
       },
       {
         path: ':id/editstock',
