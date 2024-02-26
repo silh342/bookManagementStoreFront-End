@@ -94,14 +94,15 @@ export class ShowBookComponent implements OnInit, OnDestroy {
             if (!this.viewsIncremented) {
               this.bookService
                 .incrementViews(this.currentBookId)
-                .pipe(map(() => book));
+                .subscribe(() => {
+                  this.viewsIncremented = true;
+                });
             }
             return of(book);
           })
         )
         .subscribe((book) => {
           this.currentBook$ = of(book);
-          this.viewsIncremented = true;
         })
     );
     // Optimize the code for better performance
