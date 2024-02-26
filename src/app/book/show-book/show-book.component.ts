@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, map, mapTo, of, switchMap, tap } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
@@ -78,24 +78,33 @@ export class ShowBookComponent implements OnInit, OnDestroy {
       this.authService.getUserFromToken(sessionStorage.getItem('user_token')) ||
       null;
     this.subscription$.add(
-      this.route.params.subscribe(() => {
-        this.currentBookId = +this.route.snapshot.paramMap.get('id');
-        this.currentBook$ = this.bookService.findBook(this.currentBookId).pipe(
-          map((book) => {
+      this.route.params
+        .pipe(
+          switchMap(() => {
+            this.currentBookId = +this.route.snapshot.paramMap.get('id');
+            return this.bookService.findBook(this.currentBookId);
+          }),
+          tap((book) => {
             const userFavBook: boolean = book.likedByUsers.some(
               (user) => user.username === this.activeUser.username
             );
             this.favoriteBtn = userFavBook ? true : false;
-            return book;
+          }),
+          switchMap((book) => {
+            if (!this.viewsIncremented) {
+              this.bookService
+                .incrementViews(this.currentBookId)
+                .pipe(map(() => book));
+            }
+            return of(book);
           })
-        );
-        if (!this.viewsIncremented) {
-          this.bookService.incrementViews(this.currentBookId).subscribe(() => {
-            this.viewsIncremented = true;
-          });
-        }
-      })
+        )
+        .subscribe((book) => {
+          this.currentBook$ = of(book);
+          this.viewsIncremented = true;
+        })
     );
+    // Optimize the code for better performance
   }
 
   deleteBook(id: number): void {
