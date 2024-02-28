@@ -23,6 +23,12 @@ export class HeaderComponent implements OnInit {
     );
   }
 
+  sendToManageUsers() {
+    this.router.navigate(['/manageusers'], {
+      queryParams: { user: JSON.stringify(this.currentUser) },
+    });
+  }
+
   logout(): void {
     this.authService.logout();
     this.router.navigate(['/auth/signin']);

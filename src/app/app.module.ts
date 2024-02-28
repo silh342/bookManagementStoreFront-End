@@ -40,6 +40,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { ReviewComponent } from './book/review/review.component';
 import { ErrorComponent } from './error/error.component';
 import { FavoriteComponent } from './book/favorite/favorite.component';
+import { ManagerUsersComponent } from './manager-users/manager-users.component';
+import { SearchHighlightPipe } from './author/search-highlight.pipe';
 
 @NgModule({
   declarations: [
@@ -64,6 +66,8 @@ import { FavoriteComponent } from './book/favorite/favorite.component';
     ReviewComponent,
     ErrorComponent,
     FavoriteComponent,
+    ManagerUsersComponent,
+    SearchHighlightPipe,
   ],
   imports: [
     BrowserModule,

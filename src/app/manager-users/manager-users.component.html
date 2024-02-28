@@ -1,0 +1,47 @@
+<div class="container mt-5">
+  <div class="row">
+    <table class="table">
+      <thead class="table-light">
+        <th>Username</th>
+        <th>Email</th>
+        <th>New Role</th>
+        <th>Current Role</th>
+        <th>Actions</th>
+      </thead>
+      <tbody class="table-group-divider">
+        <tr *ngFor="let user of listUser$ | async">
+          <td>{{ user.username.toUpperCase() }}</td>
+          <td>{{ user.email }}</td>
+          <td>
+            <Select class="form-control" #newRole>
+              <option value="user">USER</option>
+              <option value="admin">ADMIN</option>
+              <option value="customer">CUSTOMER</option>
+            </Select>
+          </td>
+          <td>
+            <h5>
+              <span class="badge rounded-pill text-bg-info">{{
+                user.userRoles[0].name.replace("ROLE_", "")
+              }}</span>
+            </h5>
+          </td>
+          <td>
+            <button
+              class="btn btn-success"
+              (click)="
+                saveChanges(
+                  user.username,
+                  user.userRoles[0].name,
+                  newRole.value
+                )
+              "
+            >
+              <i class="bi bi-floppy-fill mx-1"></i>Save
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

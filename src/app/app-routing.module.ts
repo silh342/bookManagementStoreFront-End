@@ -21,6 +21,8 @@ import { loginGuard } from './auth/guards/login.guard';
 import { homeGuardFn } from './auth/guards/home.guard';
 import { isUserAuthorized } from './auth/guards/isUserAuthorized.guard';
 import { FavoriteComponent } from './book/favorite/favorite.component';
+import { ManagerUsersComponent } from './manager-users/manager-users.component';
+import { adminGuard } from './auth/guards/admin.guard';
 
 const routes: Routes = [
   {
@@ -75,6 +77,11 @@ const routes: Routes = [
       { path: 'login', component: LoginComponent },
       { path: 'signup', component: SignUpComponent },
     ],
+  },
+  {
+    path: 'manageusers',
+    component: ManagerUsersComponent,
+    canActivate: [authGuardFn, adminGuard],
   },
   {
     path: '**',

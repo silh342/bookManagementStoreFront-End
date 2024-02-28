@@ -28,7 +28,8 @@ export class AuthService {
 
   getUserFromToken(token: string): User {
     const decodedToken: decodedToken = jwtDecode(token);
-    return new User(decodedToken.sub, decodedToken.roles);
+    console.log(decodedToken);
+    return new User(decodedToken.sub, decodedToken.roles, decodedToken.email);
   }
 
   isUserAuthorized(roles: string[], user: User): boolean {
