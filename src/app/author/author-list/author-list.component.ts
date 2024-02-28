@@ -109,26 +109,6 @@ export class AuthorListComponent implements OnInit, OnDestroy {
   applyFilter(filterValue: string) {
     filterValue = filterValue.toLowerCase().trim();
     this.dataSource.filter = filterValue;
-    // if (filterValue !== '') {
-    //   // Highlighting the seached text
-    //   const searchRegex = new RegExp(filterValue, 'gi');
-    //   const rows = document.querySelectorAll('[mat-row]');
-    //   console.log(searchRegex, rows);
-    //   rows.forEach((row) => {
-    //     const columns = Array.from(
-    //       document.querySelectorAll('.mat-column-fullName')
-    //     );
-    //     columns.shift();
-    //     columns.forEach((col) => {
-    //       const columnText = col.textContent || '';
-    //       console.log(columnText);
-    //       col.innerHTML = columnText.replace(
-    //         searchRegex,
-    //         (match) => `<mark class="highlight">${match}</mark>`
-    //       );
-    //     });
-    //   });
-    // }
   }
 
   ngOnDestroy(): void {
