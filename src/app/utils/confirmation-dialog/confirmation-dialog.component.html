@@ -1,11 +1,25 @@
-<h1 mat-dialog-title>{{ data.title }}</h1>
-<br>
+<h1 mat-dialog-title>
+  <i
+    *ngIf="data.danger"
+    class="bi bi-exclamation-triangle-fill text-danger"
+  ></i>
+  {{ data.title }}
+</h1>
+<br />
 <div mat-dialog-content class="mat-typography">
-  <p>{{ data.message }}</p>
+  <p>
+    {{ data.message }}
+  </p>
 </div>
-<br>
+<br />
 <mat-dialog-actions align="end">
-        <button class="btn btn-danger mx-2" mat-dialog-close>Cancel</button>
-        <button class="btn btn-success" [mat-dialog-close]="true" cdkFocusInitial (click)="onConfirm()">Confirm</button>
+  <button class="btn btn-danger mx-2" mat-dialog-close>Cancel</button>
+  <button
+    class="btn btn-success"
+    [mat-dialog-close]="true"
+    cdkFocusInitial
+    (click)="onConfirm()"
+  >
+    Confirm
+  </button>
 </mat-dialog-actions>
-
