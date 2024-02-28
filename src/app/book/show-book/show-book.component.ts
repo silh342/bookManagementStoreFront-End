@@ -89,16 +89,13 @@ export class ShowBookComponent implements OnInit, OnDestroy {
               (user) => user.username === this.activeUser.username
             );
             this.favoriteBtn = userFavBook ? true : false;
-          }),
-          switchMap((book) => {
-            if (!this.viewsIncremented) {
-              this.bookService
-                .incrementViews(this.currentBookId)
-                .subscribe(() => {
-                  this.viewsIncremented = true;
-                });
-            }
-            return of(book);
+            // if (!this.viewsIncremented) {
+            //   this.bookService
+            //     .incrementViews(this.currentBookId)
+            //     .subscribe(() => {
+            //       this.viewsIncremented = true;
+            //     });
+            // }
           })
         )
         .subscribe((book) => {

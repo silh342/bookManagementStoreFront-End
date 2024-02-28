@@ -62,7 +62,7 @@
         <td>
           <button
             class="btn btn-outline-secondary"
-            [routerLink]="['/books', book.bookId]"
+            (click)="showBook(book.bookId)"
           >
             <i class="bi bi-eye"></i>
           </button>

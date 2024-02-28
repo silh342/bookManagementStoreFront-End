@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-book',
@@ -17,7 +18,7 @@ export class ListBookComponent implements OnInit {
   selectSearchOption: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
 
-  constructor(private bookService: BookService) {}
+  constructor(private bookService: BookService, private router: Router) {}
 
   ngOnInit(): void {
     this.listBooks$ = this.bookService.findAllBooks();
@@ -79,5 +80,11 @@ export class ListBookComponent implements OnInit {
     }
     this.listBooks$ = this.bookService.findAllBooks();
     return;
+  }
+
+  showBook(id: number) {
+    this.bookService.incrementViews(id).subscribe((res) => {
+      this.router.navigate(['books', id]);
+    });
   }
 }
