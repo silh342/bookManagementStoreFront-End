@@ -17,18 +17,19 @@ import { jwtDecode } from 'jwt-decode';
 import { decodedToken } from '../model/decodedToken';
 import { MessageLoggingService } from '../../utils/messageLogging.service';
 import { registerUser } from '../model/registerUser';
+import { ErrorHandlerService } from 'src/app/utils/errorHandler.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   user: BehaviorSubject<User> = new BehaviorSubject(null);
   constructor(
     private http: HttpClient,
+    private errorHandlerService: ErrorHandlerService,
     private errorService: MessageLoggingService
   ) {}
 
   getUserFromToken(token: string): User {
     const decodedToken: decodedToken = jwtDecode(token);
-    console.log(decodedToken);
     return new User(decodedToken.sub, decodedToken.roles, decodedToken.email);
   }
 
@@ -58,13 +59,7 @@ export class AuthService {
         },
         { responseType: 'text' }
       )
-      .pipe(
-        catchError((error: HttpErrorResponse) =>
-          throwError(() => {
-            this.errorService.errorMessage.next({ message: error.error });
-          })
-        )
-      );
+      .pipe(catchError(this.errorHandlerService.errorHandler));
   }
 
   login(username: string, password: string): Observable<JwtResponse> {
@@ -80,15 +75,7 @@ export class AuthService {
           this.errorService.errorMessage.next(null);
           return token;
         }),
-        catchError((err: HttpErrorResponse) =>
-          throwError(() => {
-            console.log(err);
-            this.errorService.errorMessage.next({
-              status: 'UNAUTHORIZED ACCESS',
-              message: err.error.message,
-            });
-          })
-        )
+        catchError(this.errorHandlerService.errorHandler)
       );
   }
 
