@@ -108,6 +108,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(): void {
+    console.log(this.editBookForm.value);
     this.editBookForm.value.bookId = this.currentBookId;
     this.subscription$.add(
       this.bookService
