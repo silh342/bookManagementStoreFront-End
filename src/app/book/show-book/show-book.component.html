@@ -74,9 +74,24 @@
         </button>
       </div>
       <div class="card-footer">
-        <i class="bi bi-eye-fill">{{ currentBook.views }}</i>
-        <i class="bi bi-chat-dots mx-3">{{ currentBook.reviews.length }}</i>
-        <i class="bi bi-heart-fill">{{ currentBook.likedByUsers.length }}</i>
+        <i
+          class="bi bi-eye-fill"
+          matTooltip="Book views"
+          matTooltipPosition="above"
+          >{{ currentBook.views }}</i
+        >
+        <i
+          class="bi bi-chat-dots mx-3"
+          matTooltip="Reviews"
+          matTooltipPosition="above"
+          >{{ currentBook.reviews.length }}</i
+        >
+        <i
+          class="bi bi-heart-fill"
+          matTooltip="favorites"
+          matTooltipPosition="above"
+          >{{ currentBook.likedByUsers.length }}</i
+        >
       </div>
     </div>
   </div>
