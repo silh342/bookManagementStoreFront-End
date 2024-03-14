@@ -4,25 +4,25 @@ import { Book } from '../models/book';
 import { Observable, catchError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { BookRequestBody } from '../models/bookRequestBody';
-import { ErrorHandlerService } from 'src/app/utils/errorHandler.service';
+import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {
   constructor(
     private http: HttpClient,
-    private errorHandlerService: ErrorHandlerService
+    private errorService: MessageLoggingService
   ) {}
 
   // Search queries
   findAllBooks(): Observable<Book[]> {
     return this.http
       .get<Book[]>(backend.url + '/books')
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   incrementViews(id: number): Observable<Book> {
     return this.http
       .get<Book>(backend.url + '/books/incrementViews/' + id)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   addBookToFavorites(
     bookId: number,
@@ -35,28 +35,28 @@ export class BookService {
         username,
         addOrRemove,
       })
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   getFavoriteBooksByUser(username: string): Observable<Book[]> {
     return this.http
       .get<Book[]>(backend.url + '/books/favoritesbyuser/' + username)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   findBook(id: number): Observable<Book> {
     return this.http
       .get<Book>(backend.url + '/books/' + id)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
 
   findBookByCategory(categoryName: string): Observable<Book[]> {
     return this.http
       .get<Book[]>(backend.url + '/books/category/' + categoryName)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   findBookByAuthor(authorName: string): Observable<Book[]> {
     return this.http
       .get<Book[]>(backend.url + '/books/author/' + authorName)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
 
   // Sort requests
@@ -71,16 +71,16 @@ export class BookService {
   addBook(newBook: BookRequestBody): Observable<Book> {
     return this.http
       .post<Book>(backend.url + '/books', newBook)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   editBook(id: number, updateBook: BookRequestBody): Observable<Book> {
     return this.http
       .put<Book>(backend.url + '/books/' + id, updateBook)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
   deleteBook(id: number): Observable<any> {
     return this.http
       .delete(backend.url + '/books/' + id)
-      .pipe(catchError(this.errorHandlerService.errorHandler));
+      .pipe(catchError(this.errorService.errorHandler));
   }
 }
