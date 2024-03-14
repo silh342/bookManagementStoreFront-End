@@ -35,11 +35,12 @@ export class FavoriteComponent implements OnInit {
     const deleteFavoriteBook = this.matDialog.open(
       ConfirmationDialogComponent,
       {
-        width: '500',
+        width: '500px',
         data: {
-          title: 'Delete from favorties',
+          danger: true,
+          title: 'Delete from favorites',
           message:
-            'Are you sure you want to remove this book from your favorites ?',
+            'Are you sure you want to delete this book from your favorites ?',
         },
       }
     );

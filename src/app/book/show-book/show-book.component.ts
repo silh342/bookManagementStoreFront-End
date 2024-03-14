@@ -38,10 +38,12 @@ export class ShowBookComponent implements OnInit, OnDestroy {
   }
   openDeleteConfirmationDialog(id: number) {
     const deleteDialog = this.dialog.open(ConfirmationDialogComponent, {
-      width: '500px',
+      width: '600px',
       data: {
+        danger: true,
         title: 'Confirm Delete Operation',
-        message: 'You confirm that you want to delete this book',
+        message:
+          "Deleting this book will also delete it from user' favorite books section \n. Do you want to confirm this operation ?",
       },
     });
 
@@ -89,13 +91,6 @@ export class ShowBookComponent implements OnInit, OnDestroy {
               (user) => user.username === this.activeUser.username
             );
             this.favoriteBtn = userFavBook ? true : false;
-            // if (!this.viewsIncremented) {
-            //   this.bookService
-            //     .incrementViews(this.currentBookId)
-            //     .subscribe(() => {
-            //       this.viewsIncremented = true;
-            //     });
-            // }
           })
         )
         .subscribe((book) => {

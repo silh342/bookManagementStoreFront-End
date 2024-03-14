@@ -22,13 +22,19 @@
             name="description"
             rows="5"
             [ngModel]="currentAuthor?.description"
+            required
           ></textarea>
         </mat-form-field>
       </p>
     </form>
   </mat-dialog-content>
   <mat-dialog-actions class="dialog-actions">
-    <button mat-button color="primary" (click)="onSave(editAuthorForm.value)">
+    <button
+      mat-button
+      color="primary"
+      [disabled]="editAuthorForm.invalid"
+      (click)="onSave(editAuthorForm.value)"
+    >
       Save Changes
     </button>
     <button mat-button color="warn" (click)="onDiscard()">Discard</button>

@@ -81,8 +81,8 @@
             </i>
           </ng-container>
         </td>
-        <td>{{ book.author.fullName }}</td>
-        <td>{{ book.category.categoryName }}</td>
+        <td>{{ book.author?.fullName }}</td>
+        <td>{{ book.category?.categoryName }}</td>
         <td>{{ book.dateCreation | date : "fullDate" }}</td>
         <td>{{ book.datePublication | date : "fullDate" }}</td>
       </tr>

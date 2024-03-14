@@ -76,7 +76,7 @@ export class AuthorListComponent implements OnInit, OnDestroy {
 
   openDialogAddAuthor() {
     const addAuthor = this.matDialog.open(EditAuthorComponent, {
-      width: '400px',
+      width: '500px',
       data: { operation: 'add', title: 'Add New Author' },
     });
 
@@ -89,9 +89,12 @@ export class AuthorListComponent implements OnInit, OnDestroy {
 
   openDialogDeleteAuthor(id: number) {
     const deleteAuthor = this.matDialog.open(ConfirmationDialogComponent, {
+      width: '600px',
       data: {
+        danger: true,
         title: 'Delete Author',
-        message: 'Do you confirm the deletion of this author ?',
+        message: `Deleting this author will result in deleting their books.
+           Do you want to proceed with the deletion of this author ?`,
       },
     });
 
