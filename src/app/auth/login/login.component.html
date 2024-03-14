@@ -21,13 +21,27 @@
             </div>
             <div class="mb-3">
               <label class="form-label">Password :</label>
-              <input
-                type="password"
-                name="password"
-                ngModel
-                class="form-control"
-                required
-              />
+              <div class="input-group">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  name="password"
+                  ngModel
+                  class="form-control"
+                  required
+                />
+                <span class="input-group-text">
+                  <i
+                    class="bi bi-eye-slash-fill"
+                    (click)="togglePasswordVisibility()"
+                    *ngIf="!showPassword"
+                  ></i>
+                  <i
+                    class="bi bi-eye-fill"
+                    (click)="togglePasswordVisibility()"
+                    *ngIf="showPassword"
+                  ></i>
+                </span>
+              </div>
             </div>
             <div class="d-grid gap-2 col- mx-auto">
               <button class="btn btn-success" [disabled]="loginForm.invalid">

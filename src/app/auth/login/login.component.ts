@@ -11,7 +11,13 @@ import { Subscription } from 'rxjs';
 })
 export class LoginComponent implements OnDestroy {
   loginSubscription: Subscription = new Subscription();
+  showPassword: boolean = false;
+
   constructor(private authService: AuthService, private router: Router) {}
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
 
   onSubmit(loginForm: NgForm) {
     this.loginSubscription = this.authService

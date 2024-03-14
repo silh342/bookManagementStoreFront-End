@@ -14,6 +14,19 @@ import { Subscription } from 'rxjs';
 })
 export class SignUpComponent implements OnDestroy {
   registerSubscription: Subscription = new Subscription();
+  password: string = '';
+  repassword: string = '';
+  matchPasswords: boolean = true;
+  showPassword: boolean = false;
+  showRePassword: boolean = false;
+
+  togglePasswordVisibility() {
+    this.showPassword = !this.showPassword;
+  }
+
+  toggleRePasswordVisibility() {
+    this.showRePassword = !this.showRePassword;
+  }
   constructor(
     private authService: AuthService,
     private errorService: MessageLoggingService,
@@ -33,6 +46,10 @@ export class SignUpComponent implements OnDestroy {
             this.router.navigate(['/books']);
           });
       });
+  }
+
+  checkReEnteredPasswordValidity() {
+    this.matchPasswords = this.password === this.repassword;
   }
 
   ngOnDestroy(): void {
