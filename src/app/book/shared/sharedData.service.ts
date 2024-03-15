@@ -36,7 +36,7 @@ export class SharedDataService {
     sharedService: SharedDataService,
     option: 'author' | 'category'
   ): string[] {
-    const filterValue = name?.toLowerCase();
+    const filterValue = name ? name?.toLowerCase() : '';
     return option === 'author'
       ? sharedService.authorOptions?.filter((option) =>
           option.toLowerCase().includes(filterValue)

@@ -70,7 +70,7 @@ export class EditBookComponent implements OnInit, OnDestroy {
                   'yyyy-MM-dd'
                 ),
               },
-              authorName: value.author.fullName,
+              authorName: value.author?.fullName,
               categoryName: value.category.categoryName,
               quantity: value.inventory.quantity,
             });
