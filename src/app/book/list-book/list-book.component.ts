@@ -3,6 +3,9 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-list-book',
@@ -10,76 +13,50 @@ import { Router } from '@angular/router';
   styleUrls: ['./list-book.component.css'],
 })
 export class ListBookComponent implements OnInit {
-  listBooks$: Observable<Book[]>;
-  itemsPerPage: number = 8;
-  currentPage: number = 1;
-  searchInputHidden: string = 'all';
+  displayedColumns: string[] = [
+    'view',
+    'title',
+    'isbn',
+    'price',
+    'quantity',
+    'author',
+    'category',
+    'dateCreation',
+    'datePublication',
+  ];
+  dataSource: MatTableDataSource<Book>;
   @ViewChild('selectSearchOption', { static: false })
   selectSearchOption: ElementRef;
   @ViewChild('searchInput', { static: false }) searchInput: ElementRef;
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) matsort: MatSort;
 
   constructor(private bookService: BookService, private router: Router) {}
 
   ngOnInit(): void {
-    this.listBooks$ = this.bookService.findAllBooks();
+    this.bookService.findAllBooks().subscribe((listBooks) => {
+      this.dataSource = new MatTableDataSource(listBooks);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.matsort;
+      this.dataSource.filterPredicate = (data: any, filter: string) =>
+        this.customFilter(data, filter);
+    });
   }
 
-  selectSearch(data: Event): void {
-    const selectElement: HTMLSelectElement = data.target as HTMLSelectElement;
-    if (selectElement.value === 'all') {
-      this.searchInputHidden = 'all';
-      this.ngOnInit();
-      return;
-    }
-    if (selectElement.value === 'author') {
-      this.searchInputHidden = 'author';
-      return;
-    }
-    this.searchInputHidden = 'category';
-    return;
+  filterListBooks(filterVal: string) {
+    this.dataSource.filter = filterVal.toLowerCase().trim();
   }
 
-  searchBooks(): void {
-    this.currentPage = 1;
-    switch (this.searchInputHidden) {
-      case 'all':
-        this.listBooks$ = this.bookService.findAllBooks();
-        break;
-      case 'author':
-        if (this.searchInput.nativeElement.value === '') {
-          this.listBooks$ = this.bookService.findAllBooks();
-        } else {
-          this.listBooks$ = this.bookService.findBookByAuthor(
-            this.searchInput.nativeElement.value
-          );
-        }
-        break;
-      case 'category':
-        if (this.searchInput.nativeElement.value === '') {
-          this.listBooks$ = this.bookService.findAllBooks();
-        } else {
-          this.listBooks$ = this.bookService.findBookByCategory(
-            this.searchInput.nativeElement.value
-          );
-        }
-        break;
-    }
-  }
-
-  sortBooks(sortOption: Event): void {
-    const sortSelect: HTMLSelectElement =
-      sortOption.target as HTMLSelectElement;
-    if (sortSelect.value === 'asc') {
-      this.listBooks$ = this.bookService.sortBooksAsc();
-      return;
-    }
-
-    if (sortSelect.value === 'desc') {
-      this.listBooks$ = this.bookService.sortBooksDesc();
-      return;
-    }
-    this.listBooks$ = this.bookService.findAllBooks();
-    return;
+  customFilter(data: Book, filter: string): boolean {
+    filter = filter.toLowerCase();
+    return (
+      data.title.toLowerCase().includes(filter) ||
+      data.isbn.toLowerCase().includes(filter) ||
+      data.price.toString().includes(filter) ||
+      data.author.fullName.toLowerCase().includes(filter) ||
+      data.category.categoryName.toLowerCase().includes(filter) ||
+      data.inventory.quantity.toString().includes(filter)
+    );
   }
 
   showBook(id: number) {
