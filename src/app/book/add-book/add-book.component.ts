@@ -91,6 +91,7 @@ export class AddBookComponent implements OnInit, OnDestroy {
       'yyyy-MM-dd',
       'en-US'
     );
+
     //TODO handle errors with a template for the errors
     this.bookSubscription = this.bookService
       .addBook(this.addBookForm.value)
