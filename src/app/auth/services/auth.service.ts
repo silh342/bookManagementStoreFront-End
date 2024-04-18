@@ -15,7 +15,7 @@ import { JwtResponse } from '../model/jwtResponse';
 import { backend } from 'src/environments/environement';
 import { jwtDecode } from 'jwt-decode';
 import { decodedToken } from '../model/decodedToken';
-import { MessageLoggingService } from '../../utils/messageLogging.service';
+import { MessageLoggingService } from '../../shared/messageLogging.service';
 import { registerUser } from '../model/registerUser';
 
 @Injectable({ providedIn: 'root' })

@@ -9,7 +9,7 @@ import {
 import { Observable, Subscription } from 'rxjs';
 import { Author } from 'src/app/book/models/author';
 import { AuthorService } from 'src/app/author/services/author.service';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Component({
   selector: 'app-edit-author',

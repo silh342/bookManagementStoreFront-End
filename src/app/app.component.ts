@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MessageLoggingService } from './utils/messageLogging.service';
-import { ErrorTemplate } from './utils/error/error';
+import { MessageLoggingService } from './shared/messageLogging.service';
+import { ErrorTemplate } from './shared/error';
 import { Subscription } from 'rxjs';
 
 @Component({

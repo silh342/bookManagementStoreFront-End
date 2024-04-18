@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { Category } from '../models/category';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })
 export class CategoryService {

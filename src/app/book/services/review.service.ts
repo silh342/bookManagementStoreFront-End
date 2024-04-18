@@ -4,7 +4,7 @@ import { Observable, catchError } from 'rxjs';
 import { Review } from '../models/review';
 import { backend } from 'src/environments/environement';
 import { ReviewRequestBody } from '../models/reviewRequestBody';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })
 export class ReviewService {

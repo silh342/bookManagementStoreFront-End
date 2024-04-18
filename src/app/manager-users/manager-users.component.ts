@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { User } from '../auth/model/user';
-import { Observable, map, tap } from 'rxjs';
+import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../utils/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-manager-users',

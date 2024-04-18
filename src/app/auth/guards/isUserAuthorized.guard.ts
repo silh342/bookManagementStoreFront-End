@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { map, of, take } from 'rxjs';
 import { User } from '../model/user';
-import { MessageLoggingService } from '../../utils/messageLogging.service';
+import { MessageLoggingService } from '../../shared/messageLogging.service';
 
 export const isUserAuthorized: CanActivateFn = (
   route: ActivatedRouteSnapshot,

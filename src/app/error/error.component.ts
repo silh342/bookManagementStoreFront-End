@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { ErrorTemplate } from '../utils/error/error';
-import { MessageLoggingService } from '../utils/messageLogging.service';
+import { ErrorTemplate } from '../shared/error';
+import { MessageLoggingService } from '../shared/messageLogging.service';
 
 @Component({
   selector: 'app-error',

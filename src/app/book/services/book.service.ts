@@ -4,7 +4,7 @@ import { Book } from '../models/book';
 import { Observable, catchError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { BookRequestBody } from '../models/bookRequestBody';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })
 export class BookService {

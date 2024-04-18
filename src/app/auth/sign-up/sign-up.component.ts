@@ -2,9 +2,9 @@ import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { registerUser } from '../model/registerUser';
 import { NgForm } from '@angular/forms';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 import { Router } from '@angular/router';
-import { ErrorTemplate } from 'src/app/utils/error/error';
+import { ErrorTemplate } from 'src/app/shared/error';
 import { Subscription } from 'rxjs';
 
 @Component({

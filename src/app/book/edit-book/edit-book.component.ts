@@ -6,8 +6,8 @@ import { SharedDataService } from '../shared/sharedData.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Component({
   selector: 'app-edit-book',

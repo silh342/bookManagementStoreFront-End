@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, throwError } from 'rxjs';
 import { backend } from 'src/environments/environement';
 import { Author } from '../../book/models/author';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Injectable({ providedIn: 'root' })
 export class AuthorService {

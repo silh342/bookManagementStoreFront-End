@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
-import { ErrorTemplate } from './error/error';
+import { ErrorTemplate } from './error';
 import { HttpErrorResponse } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })

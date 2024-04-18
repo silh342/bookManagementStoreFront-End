@@ -4,11 +4,11 @@ import { Observable, Subscription, map, mapTo, of, switchMap, tap } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmationDialogComponent } from '../../utils/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { EditStockComponent } from '../edit-stock/edit-stock.component';
-import { MessageLoggingService } from 'src/app/utils/messageLogging.service';
+import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 
 @Component({
   selector: 'app-show-book',

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MessageLoggingService } from '../utils/messageLogging.service';
+import { MessageLoggingService } from '../shared/messageLogging.service';
 
 @Component({
   selector: 'app-home',

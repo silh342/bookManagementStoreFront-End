@@ -7,7 +7,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
-import { ConfirmationDialogComponent } from 'src/app/utils/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { Subscription } from 'rxjs';
