@@ -1,6 +1,6 @@
 <div class="container">
+  @if(success) {
   <div
-    *ngIf="success"
     class="mt-5 alert alert-success alert-dismissible fade show"
     role="alert"
   >
@@ -15,12 +15,8 @@
       (click)="success = null"
     ></button>
   </div>
-
-  <div
-    *ngIf="error"
-    class="mt-5 alert alert-danger alert-dismissible fade show"
-    role="alert"
-  >
+  } @if(error) {
+  <div class="mt-5 alert alert-danger alert-dismissible fade show" role="alert">
     <h4>{{ error.status }}</h4>
     <p class="text-muted">{{ error.timestamp }}</p>
     <p>{{ error.message }}</p>
@@ -32,4 +28,5 @@
       (click)="error = null"
     ></button>
   </div>
+  }
 </div>

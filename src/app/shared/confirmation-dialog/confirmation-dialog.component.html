@@ -1,8 +1,7 @@
 <h1 mat-dialog-title>
-  <i
-    *ngIf="data.danger"
-    class="bi bi-exclamation-triangle-fill text-danger"
-  ></i>
+  @if(data.danger) {
+  <i class="bi bi-exclamation-triangle-fill text-danger"></i>
+  }
   {{ data.title }}
 </h1>
 <br />

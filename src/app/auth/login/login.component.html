@@ -30,16 +30,17 @@
                   required
                 />
                 <span class="input-group-text">
+                  @if(!showPassword) {
                   <i
                     class="bi bi-eye-slash-fill"
                     (click)="togglePasswordVisibility()"
-                    *ngIf="!showPassword"
                   ></i>
+                  } @if(showPassword) {
                   <i
                     class="bi bi-eye-fill"
                     (click)="togglePasswordVisibility()"
-                    *ngIf="showPassword"
                   ></i>
+                  }
                 </span>
               </div>
             </div>

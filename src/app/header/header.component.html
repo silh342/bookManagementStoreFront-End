@@ -17,87 +17,79 @@
         <li routerLinkActive="active">
           <a class="nav-link" routerLink="/">Home</a>
         </li>
-
-        <ng-container *ngIf="currentUser">
-          <li routerLinkActive="active" class="nav-item dropdown">
-            <a
-              class="nav-link dropdown-toggle"
-              role="button"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
-              Books
-            </a>
-            <ul class="dropdown-menu">
-              <li rourerLinkActive="active">
-                <a class="dropdown-item" routerLink="/books">List Books</a>
-              </li>
-              <ng-container *ngIf="isUserAuthorized()">
-                <li><hr class="dropdown-divider" /></li>
-                <li rourerLinkActive="active">
-                  <a class="dropdown-item" routerLink="/books/new">Add Book</a>
-                </li>
-              </ng-container>
-            </ul>
-          </li>
-          <li routerLinkActive="active">
-            <a class="nav-link" routerLink="/authors">Authors</a>
-          </li>
-        </ng-container>
+        @if(currentUser) {
+        <li routerLinkActive="active" class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            Books
+          </a>
+          <ul class="dropdown-menu">
+            <li rourerLinkActive="active">
+              <a class="dropdown-item" routerLink="/books">List Books</a>
+            </li>
+            @if(isUserAuthorized()) {
+            <li><hr class="dropdown-divider" /></li>
+            <li rourerLinkActive="active">
+              <a class="dropdown-item" routerLink="/books/new">Add Book</a>
+            </li>
+            }
+          </ul>
+        </li>
+        <li routerLinkActive="active">
+          <a class="nav-link" routerLink="/authors">Authors</a>
+        </li>
+        }
       </div>
       <div class="navbar-divider"></div>
       <div class="navbar-nav ms-auto">
-        <ng-container *ngIf="!currentUser">
-          <a class="nav-link" routerLink="/auth/login"> Login</a>
-          <a class="nav-link" routerLink="/auth/signup">Register </a>
-        </ng-container>
-        <ng-container *ngIf="currentUser">
-          <li>
-            <a
-              class="nav-link"
-              [routerLink]="['books/favorites', currentUser.username]"
-              ><i class="bi bi-star-fill">Favorites</i></a
-            >
-          </li>
+        @if(!currentUser) {
+        <a class="nav-link" routerLink="/auth/login"> Login</a>
+        <a class="nav-link" routerLink="/auth/signup">Register </a>
+        } @else if(currentUser) {
 
-          <ng-container
-            *ngIf="currentUser.role.includes('ROLE_ADMIN'); else CASENOTADMIN"
+        <li>
+          <a
+            class="nav-link"
+            [routerLink]="['books/favorites', currentUser.username]"
+            ><i class="bi bi-star-fill">Favorites</i></a
           >
-            <li class="nav-item dropdown">
-              <a
-                class="nav-link"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                ><i class="bi bi-person-check">
-                  {{ currentUser.username }}</i
-                ></a
-              >
-              <ul class="dropdown-menu">
-                <li rourerLinkActive="active">
-                  <a class="dropdown-item" (click)="sendToManageUsers()"
-                    >Manage users</a
-                  >
-                </li>
-              </ul>
-            </li>
-          </ng-container>
-          <ng-template #CASENOTADMIN>
+        </li>
+        @if(currentUser.role.includes('ROLE_ADMIN')) {
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link"
+            role="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+            ><i class="bi bi-person-check"> {{ currentUser.username }}</i></a
+          >
+          <ul class="dropdown-menu">
             <li rourerLinkActive="active">
-              <a class="nav-link"
-                ><i class="bi bi-person-check">
-                  {{ currentUser.username }}</i
-                ></a
+              <a class="dropdown-item" (click)="sendToManageUsers()"
+                >Manage users</a
               >
             </li>
-          </ng-template>
+          </ul>
+        </li>
+        } @else {
+        <li rourerLinkActive="active">
+          <a class="nav-link"
+            ><i class="bi bi-person-check"> {{ currentUser.username }}</i></a
+          >
+        </li>
+        }
 
-          <li>
-            <a class="nav-link" (click)="logout()"
-              ><i class="bi bi-door-open-fill">Logout</i>
-            </a>
-          </li>
-        </ng-container>
+        <li>
+          <a class="nav-link" (click)="logout()"
+            ><i class="bi bi-door-open-fill">Logout</i>
+          </a>
+        </li>
+
+        }
       </div>
     </div>
   </div>

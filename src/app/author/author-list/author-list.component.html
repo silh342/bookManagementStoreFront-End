@@ -11,8 +11,8 @@
       #searchText
     />
 
+    @if(isUserEligible(['ROLE_USER', 'ROLE_ADMIN'])) {
     <button
-      *ngIf="isUserEligible(['ROLE_USER', 'ROLE_ADMIN'])"
       mat-mini-fab
       color="primary"
       aria-label="Add Author"
@@ -20,6 +20,7 @@
     >
       <mat-icon>add</mat-icon>
     </button>
+    }
   </div>
 
   <table mat-table [dataSource]="dataSource" matSort>
@@ -53,8 +54,8 @@
     <ng-container matColumnDef="actions">
       <th class="text-center" mat-header-cell *matHeaderCellDef>Actions</th>
       <td mat-cell class="actions-column" *matCellDef="let element">
+        @if(isUserEligible(['ROLE_USER', 'ROLE_ADMIN'])) {
         <button
-          *ngIf="isUserEligible(['ROLE_USER', 'ROLE_ADMIN'])"
           mat-mini-fab
           color="primary"
           aria-label="Edit Author"
@@ -62,8 +63,8 @@
         >
           <mat-icon>edit</mat-icon>
         </button>
+        } @if(isUserEligible(['ROLE_ADMIN'])) {
         <button
-          *ngIf="isUserEligible(['ROLE_ADMIN'])"
           mat-mini-fab
           color="warn"
           aria-label="Delete Author"
@@ -71,6 +72,7 @@
         >
           <mat-icon>delete</mat-icon>
         </button>
+        }
       </td>
     </ng-container>
 

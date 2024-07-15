@@ -1,5 +1,6 @@
 <div class="row my-5">
-  <div *ngIf="currentBook$ | async as currentBook" class="col-md-6">
+  @if(currentBook$ | async; as currentBook) {
+  <div class="col-md-6">
     <div class="card mb-3">
       <img
         src="/assets/images/standard.avif"
@@ -95,6 +96,8 @@
       </div>
     </div>
   </div>
+  }
+
   <div class="col-md-6">
     <app-review
       [bookId]="currentBookId"

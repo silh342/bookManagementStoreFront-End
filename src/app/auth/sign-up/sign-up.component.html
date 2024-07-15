@@ -41,16 +41,17 @@
                   required
                 />
                 <span class="input-group-text">
+                  @if(!showPassword) {
                   <i
                     class="bi bi-eye-slash-fill"
                     (click)="togglePasswordVisibility(showPassword)"
-                    *ngIf="!showPassword"
                   ></i>
+                  } @else {
                   <i
                     class="bi bi-eye-fill"
                     (click)="togglePasswordVisibility(showPassword)"
-                    *ngIf="showPassword"
                   ></i>
+                  }
                 </span>
               </div>
             </div>
@@ -66,22 +67,25 @@
                   required
                 />
                 <span class="input-group-text">
+                  @if(!showRePassword) {
                   <i
                     class="bi bi-eye-slash-fill"
                     (click)="toggleRePasswordVisibility(showRePassword)"
-                    *ngIf="!showRePassword"
                   ></i>
+                  } @else {
                   <i
                     class="bi bi-eye-fill"
                     (click)="toggleRePasswordVisibility(showRePassword)"
-                    *ngIf="showRePassword"
                   ></i>
+                  }
                 </span>
               </div>
-              <div class="mt-2 text-danger" *ngIf="!matchPasswords">
+              @if(!matchPasswords) {
+              <div class="mt-2 text-danger">
                 <i class="bi bi-exclamation-lg"></i>
                 Passwords don't match. Please try again
               </div>
+              }
             </div>
             <div class="d-grid gap-2 col- mx-auto">
               <button

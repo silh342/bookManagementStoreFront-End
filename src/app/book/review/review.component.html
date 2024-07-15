@@ -86,17 +86,15 @@
       </p>
       <p class="card-text">Review : {{ review.body }}</p>
       <!--If CurrentUser && review.author equals CurrentUser-->
+      @if((activeUser && activeUser.username === review.reviewAuthor.username)
+      || activeUser.role.includes('ROLE_ADMIN')) {
       <button
         (click)="deleteReview(review.reviewId)"
-        *ngIf="
-          (activeUser &&
-            activeUser.username === review.reviewAuthor.username) ||
-          activeUser.role.includes('ROLE_ADMIN')
-        "
         class="btn btn-sm btn-danger"
       >
         Delete
       </button>
+      }
     </div>
   </div>
 </div>

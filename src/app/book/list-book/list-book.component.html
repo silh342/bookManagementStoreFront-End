@@ -82,7 +82,8 @@
             element.inventory.quantity | searchHighlight : searchText.value
           "
         ></div>
-        <ng-container *ngIf="element.inventory.quantity < 5">
+        @if(element.inventory.quantity < 5) {
+        <ng-container>
           <i
             class="bi bi-exclamation-circle-fill text-danger"
             matTooltip="Low Inventory"
@@ -90,6 +91,7 @@
           >
           </i>
         </ng-container>
+        }
       </td>
     </ng-container>
 

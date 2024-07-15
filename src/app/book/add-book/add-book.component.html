@@ -119,7 +119,6 @@
           required
         />
         <mat-autocomplete #cat="matAutocomplete">
-          <ng-container *ngIf=""></ng-container>
           <mat-option
             *ngFor="let categoryname of categoryFilteredOptions | async"
             [value]="categoryname"
