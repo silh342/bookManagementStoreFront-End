@@ -97,12 +97,11 @@
           required
         />
         <mat-autocomplete #auto="matAutocomplete">
-          <mat-option
-            *ngFor="let authorname of authorFilteredOptions | async"
-            [value]="authorname"
-          >
+          @for(authorname of authorFilteredOptions | async; track $index) {
+          <mat-option [value]="authorname">
             {{ authorname }}
           </mat-option>
+          }
         </mat-autocomplete>
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">please provide a valid author</div>
@@ -119,12 +118,9 @@
           required
         />
         <mat-autocomplete #cat="matAutocomplete">
-          <mat-option
-            *ngFor="let categoryname of categoryFilteredOptions | async"
-            [value]="categoryname"
-          >
-            {{ categoryname }}</mat-option
-          >
+          @for(categoryname of categoryFilteredOptions | async; track $index) {
+          <mat-option [value]="categoryname"> {{ categoryname }}</mat-option>
+          }
         </mat-autocomplete>
         <div class="valid-feedback">Looks good!</div>
         <div class="invalid-feedback">please provide a valid category</div>

@@ -11,7 +11,8 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let favbook of listFavBook$ | async">
+      @for(favbook of listFavBook$ | async; track $index) {
+      <tr>
         <td>
           <img
             [ngClass]="{ imgClass: true }"
@@ -40,6 +41,7 @@
           </button>
         </td>
       </tr>
+      }
     </tbody>
   </table>
 </div>
