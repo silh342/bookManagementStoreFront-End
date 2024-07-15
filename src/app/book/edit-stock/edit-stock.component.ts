@@ -12,9 +12,10 @@ import { BookRequestBody } from '../models/bookRequestBody';
 import { Subscription } from 'rxjs';
 
 @Component({
-  selector: 'app-edit-stock',
-  templateUrl: './edit-stock.component.html',
-  styleUrls: ['./edit-stock.component.css'],
+    selector: 'app-edit-stock',
+    templateUrl: './edit-stock.component.html',
+    styleUrls: ['./edit-stock.component.css'],
+    standalone: true,
 })
 export class EditStockComponent implements OnDestroy {
   @ViewChild('quantity') quantityInput: ElementRef;

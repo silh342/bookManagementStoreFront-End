@@ -6,16 +6,16 @@ import { authGuardFn } from '../auth/guards/auth.guard';
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [ManagerUsersComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: ManagerUsersComponent,
-        canActivate: [authGuardFn, adminGuard],
-      },
-    ]),
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild([
+            {
+                path: '',
+                component: ManagerUsersComponent,
+                canActivate: [authGuardFn, adminGuard],
+            },
+        ]),
+        ManagerUsersComponent,
+    ],
 })
 export class ManageUsersModule {}

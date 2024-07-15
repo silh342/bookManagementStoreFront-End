@@ -14,14 +14,12 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { MatDialogModule } from '@angular/material/dialog';
-import { SharedModule } from '../shared/shared.module';
+
 
 @NgModule({
-  declarations: [AuthorComponent, AuthorListComponent, EditAuthorComponent],
-  imports: [
+    imports: [
     FormsModule,
     CommonModule,
-    SharedModule,
     MatDialogModule,
     MatPaginatorModule,
     MatTableModule,
@@ -31,13 +29,14 @@ import { SharedModule } from '../shared/shared.module';
     MatInputModule,
     MatButtonModule,
     RouterModule.forChild([
-      {
-        path: '',
-        component: AuthorComponent,
-        canActivateChild: [authGuardFn],
-        children: [{ path: '', component: AuthorListComponent }],
-      },
+        {
+            path: '',
+            component: AuthorComponent,
+            canActivateChild: [authGuardFn],
+            children: [{ path: '', component: AuthorListComponent }],
+        },
     ]),
-  ],
+    AuthorComponent, AuthorListComponent, EditAuthorComponent,
+],
 })
 export class AuthorModule {}

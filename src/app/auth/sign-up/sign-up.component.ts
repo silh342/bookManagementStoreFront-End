@@ -1,16 +1,16 @@
 import { Component, OnDestroy } from '@angular/core';
 import { AuthService } from '../services/auth.service';
-import { registerUser } from '../model/registerUser';
-import { NgForm } from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
 import { Router } from '@angular/router';
-import { ErrorTemplate } from 'src/app/shared/error';
 import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
   styleUrls: ['./sign-up.component.css'],
+  standalone: true,
+  imports: [FormsModule],
 })
 export class SignUpComponent implements OnDestroy {
   registerSubscription: Subscription = new Subscription();

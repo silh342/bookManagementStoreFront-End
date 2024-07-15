@@ -8,7 +8,8 @@ import {
 import { AbstractControl } from '@angular/forms';
 
 @Directive({
-  selector: '[setValidFlag]',
+    selector: '[setValidFlag]',
+    standalone: true,
 })
 export class ValidateInputDirective implements OnInit {
   @Input('setValidFlag') control: AbstractControl;

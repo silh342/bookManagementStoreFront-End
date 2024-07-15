@@ -5,11 +5,14 @@ import { Observable } from 'rxjs';
 import { UserService } from './user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../shared/confirmation-dialog/confirmation-dialog.component';
+import { AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-manager-users',
-  templateUrl: './manager-users.component.html',
-  styleUrls: ['./manager-users.component.css'],
+    selector: 'app-manager-users',
+    templateUrl: './manager-users.component.html',
+    styleUrls: ['./manager-users.component.css'],
+    standalone: true,
+    imports: [AsyncPipe],
 })
 export class ManagerUsersComponent implements OnInit {
   currentUser: User;

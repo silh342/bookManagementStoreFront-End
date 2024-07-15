@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 
 @NgModule({
-  declarations: [AuthComponent, LoginComponent, SignUpComponent],
-  imports: [FormsModule, CommonModule, AuthRoutingModule],
+    imports: [FormsModule, CommonModule, AuthRoutingModule, AuthComponent, LoginComponent, SignUpComponent],
 })
 export class AuthModule {}

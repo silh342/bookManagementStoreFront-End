@@ -2,14 +2,21 @@ import { Component, OnInit } from '@angular/core';
 import { BookService } from '../services/book.service';
 import { Observable } from 'rxjs';
 import { Book } from '../models/book';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/confirmation-dialog.component';
+import { NgClass, AsyncPipe } from '@angular/common';
 
 @Component({
-  selector: 'app-favorite',
-  templateUrl: './favorite.component.html',
-  styleUrls: ['./favorite.component.css'],
+    selector: 'app-favorite',
+    templateUrl: './favorite.component.html',
+    styleUrls: ['./favorite.component.css'],
+    standalone: true,
+    imports: [
+        NgClass,
+        RouterLink,
+        AsyncPipe,
+    ],
 })
 export class FavoriteComponent implements OnInit {
   listFavBook$: Observable<Book[]>;

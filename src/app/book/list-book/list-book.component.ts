@@ -3,14 +3,36 @@ import { BookService } from '../services/book.service';
 import { Book } from '../models/book';
 import { Observable } from 'rxjs';
 import { Router } from '@angular/router';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
+import { SearchHighlightPipe } from '../../shared/pipes/search-highlight.pipe';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
-  selector: 'app-list-book',
-  templateUrl: './list-book.component.html',
-  styleUrls: ['./list-book.component.css'],
+    selector: 'app-list-book',
+    templateUrl: './list-book.component.html',
+    styleUrls: ['./list-book.component.css'],
+    standalone: true,
+    imports: [
+        MatTable,
+        MatSort,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatCellDef,
+        MatCell,
+        MatSortHeader,
+        MatTooltip,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatPaginator,
+        SearchHighlightPipe,
+        DatePipe,
+    ],
 })
 export class ListBookComponent implements OnInit {
   displayedColumns: string[] = [

@@ -14,21 +14,11 @@ import { MatTableModule } from '@angular/material/table';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { SharedModule } from '../shared/shared.module';
+
 import { CommonModule } from '@angular/common';
 
 @NgModule({
-  declarations: [
-    BookComponent,
-    ListBookComponent,
-    AddBookComponent,
-    ShowBookComponent,
-    EditBookComponent,
-    EditStockComponent,
-    FavoriteComponent,
-    ReviewComponent,
-  ],
-  imports: [
+    imports: [
     BookRoutingModule,
     MatPaginatorModule,
     MatTableModule,
@@ -37,8 +27,15 @@ import { CommonModule } from '@angular/common';
     MatAutocompleteModule,
     FormsModule,
     ReactiveFormsModule,
-    SharedModule,
     CommonModule,
-  ],
+    BookComponent,
+    ListBookComponent,
+    AddBookComponent,
+    ShowBookComponent,
+    EditBookComponent,
+    EditStockComponent,
+    FavoriteComponent,
+    ReviewComponent,
+],
 })
 export class BookModule {}

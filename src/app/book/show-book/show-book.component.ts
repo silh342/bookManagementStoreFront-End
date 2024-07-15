@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable, Subscription, map, mapTo, of, switchMap, tap } from 'rxjs';
 import { Book } from '../models/book';
 import { BookService } from '../services/book.service';
@@ -9,11 +9,24 @@ import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { EditStockComponent } from '../edit-stock/edit-stock.component';
 import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
+import { ReviewComponent } from '../review/review.component';
+import { MatTooltip } from '@angular/material/tooltip';
+import { NgIf, NgClass, AsyncPipe, DatePipe } from '@angular/common';
 
 @Component({
-  selector: 'app-show-book',
-  templateUrl: './show-book.component.html',
-  styleUrls: ['./show-book.component.css'],
+    selector: 'app-show-book',
+    templateUrl: './show-book.component.html',
+    styleUrls: ['./show-book.component.css'],
+    standalone: true,
+    imports: [
+        NgIf,
+        RouterLink,
+        NgClass,
+        MatTooltip,
+        ReviewComponent,
+        AsyncPipe,
+        DatePipe,
+    ],
 })
 export class ShowBookComponent implements OnInit, OnDestroy {
   subscription$: Subscription = new Subscription();

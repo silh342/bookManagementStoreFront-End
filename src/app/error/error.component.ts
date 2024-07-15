@@ -4,9 +4,10 @@ import { ErrorTemplate } from '../shared/error';
 import { MessageLoggingService } from '../shared/messageLogging.service';
 
 @Component({
-  selector: 'app-error',
-  templateUrl: './error.component.html',
-  styleUrls: ['./error.component.css'],
+    selector: 'app-error',
+    templateUrl: './error.component.html',
+    styleUrls: ['./error.component.css'],
+    standalone: true,
 })
 export class ErrorComponent implements OnInit, OnDestroy {
   subscription$: Subscription = new Subscription();

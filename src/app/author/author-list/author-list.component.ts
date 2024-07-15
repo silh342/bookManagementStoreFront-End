@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Author } from 'src/app/book/models/author';
 import { AuthorService } from 'src/app/author/services/author.service';
-import { MatTableDataSource } from '@angular/material/table';
+import { MatTableDataSource, MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, MatSortHeader } from '@angular/material/sort';
 import { MatDialog } from '@angular/material/dialog';
 import { EditAuthorComponent } from '../edit-author/edit-author.component';
 import { Router } from '@angular/router';
@@ -11,11 +11,33 @@ import { ConfirmationDialogComponent } from 'src/app/shared/confirmation-dialog/
 import { AuthService } from 'src/app/auth/services/auth.service';
 import { User } from 'src/app/auth/model/user';
 import { Subscription } from 'rxjs';
+import { SearchHighlightPipe } from '../../shared/pipes/search-highlight.pipe';
+import { MatIcon } from '@angular/material/icon';
+import { MatMiniFabButton } from '@angular/material/button';
 
 @Component({
-  selector: 'app-author-list',
-  templateUrl: './author-list.component.html',
-  styleUrls: ['./author-list.component.css'],
+    selector: 'app-author-list',
+    templateUrl: './author-list.component.html',
+    styleUrls: ['./author-list.component.css'],
+    standalone: true,
+    imports: [
+        MatMiniFabButton,
+        MatIcon,
+        MatTable,
+        MatSort,
+        MatColumnDef,
+        MatHeaderCellDef,
+        MatHeaderCell,
+        MatSortHeader,
+        MatCellDef,
+        MatCell,
+        MatHeaderRowDef,
+        MatHeaderRow,
+        MatRowDef,
+        MatRow,
+        MatPaginator,
+        SearchHighlightPipe,
+    ],
 })
 export class AuthorListComponent implements OnInit, OnDestroy {
   headers: string[] = ['fullName', 'description', 'actions'];

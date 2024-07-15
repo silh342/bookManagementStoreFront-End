@@ -1,18 +1,32 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DatePipe, formatDate } from '@angular/common';
+import { FormControl, FormGroup, Validators, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe, formatDate, AsyncPipe } from '@angular/common';
 import { Observable, Subscription } from 'rxjs';
 import { SharedDataService } from '../shared/sharedData.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { BookService } from '../services/book.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from '../../shared/confirmation-dialog/confirmation-dialog.component';
 import { MessageLoggingService } from 'src/app/shared/messageLogging.service';
+import { MatOption } from '@angular/material/core';
+import { MatAutocompleteTrigger, MatAutocomplete } from '@angular/material/autocomplete';
+import { ValidateInputDirective } from '../../shared/directives/validate-input.directive';
 
 @Component({
-  selector: 'app-edit-book',
-  templateUrl: './edit-book.component.html',
-  styleUrls: ['./edit-book.component.css'],
+    selector: 'app-edit-book',
+    templateUrl: './edit-book.component.html',
+    styleUrls: ['./edit-book.component.css'],
+    standalone: true,
+    imports: [
+        FormsModule,
+        ReactiveFormsModule,
+        ValidateInputDirective,
+        MatAutocompleteTrigger,
+        MatAutocomplete,
+        MatOption,
+        RouterLink,
+        AsyncPipe,
+    ],
 })
 export class EditBookComponent implements OnInit, OnDestroy {
   author = new FormControl(null, Validators.required);
