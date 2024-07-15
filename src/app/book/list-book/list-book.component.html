@@ -1,162 +1,164 @@
-<div class="row mt-5 offset-md-8">
-  <div class="mb-2 d-flex">
-    <div class="input-group">
-      <span class="input-group-text"><i class="bi bi-search"></i></span>
-      <input
-        (input)="filterListBooks($event.target.value)"
-        type="text"
-        class="form-control"
-        placeholder="Search..."
-        #searchText
-      />
+<div class="container">
+  <div class="row mt-5 offset-md-8">
+    <div class="mb-2 d-flex">
+      <div class="input-group">
+        <span class="input-group-text"><i class="bi bi-search"></i></span>
+        <input
+          (input)="filterListBooks($event.target.value)"
+          type="text"
+          class="form-control"
+          placeholder="Search..."
+          #searchText
+        />
+      </div>
     </div>
   </div>
-</div>
 
-<div class="mat-elevation-z8">
-  <table mat-table [dataSource]="dataSource" matSort>
-    <!-- View Column -->
-    <ng-container matColumnDef="view">
-      <th mat-header-cell *matHeaderCellDef></th>
-      <td mat-cell *matCellDef="let element">
-        <button
-          class="btn btn-outline-secondary"
-          (click)="showBook(element.bookId)"
-        >
-          <i class="bi bi-eye"></i>
-        </button>
-      </td>
-    </ng-container>
-
-    <!-- Title Column -->
-    <ng-container matColumnDef="title">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="sort by title"
-      >
-        Title
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          [innerHTML]="element.title | searchHighlight : searchText.value"
-        ></div>
-      </td>
-    </ng-container>
-
-    <!-- ISBN Column -->
-    <ng-container matColumnDef="isbn">
-      <th mat-header-cell *matHeaderCellDef>ISBN</th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          [innerHTML]="element.isbn | searchHighlight : searchText.value"
-        ></div>
-      </td>
-    </ng-container>
-
-    <!-- Price Column -->
-    <ng-container matColumnDef="price">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="sort by price"
-      >
-        Price
-      </th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          [innerHTML]="element.price | searchHighlight : searchText.value"
-        ></div>
-      </td>
-    </ng-container>
-
-    <!-- Quantity Column -->
-    <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef>Quantity</th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          style="display: inline"
-          [innerHTML]="
-            element.inventory.quantity | searchHighlight : searchText.value
-          "
-        ></div>
-        @if(element.inventory.quantity < 5) {
-        <ng-container>
-          <i
-            class="bi bi-exclamation-circle-fill text-danger"
-            matTooltip="Low Inventory"
-            matTooltipPosition="above"
+  <div class="mat-elevation-z8 mb-5">
+    <table mat-table [dataSource]="dataSource" matSort>
+      <!-- View Column -->
+      <ng-container matColumnDef="view">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            class="btn btn-outline-secondary"
+            (click)="showBook(element.bookId)"
           >
-          </i>
-        </ng-container>
-        }
-      </td>
-    </ng-container>
+            <i class="bi bi-eye"></i>
+          </button>
+        </td>
+      </ng-container>
 
-    <!-- Author Column -->
-    <ng-container matColumnDef="author">
-      <th mat-header-cell *matHeaderCellDef>Author</th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          [innerHTML]="
-            element.author.fullName | searchHighlight : searchText.value
-          "
-        ></div>
-      </td>
-    </ng-container>
+      <!-- Title Column -->
+      <ng-container matColumnDef="title">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="sort by title"
+        >
+          Title
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [innerHTML]="element.title | searchHighlight : searchText.value"
+          ></div>
+        </td>
+      </ng-container>
 
-    <!-- Category Column -->
-    <ng-container matColumnDef="category">
-      <th mat-header-cell *matHeaderCellDef>Category</th>
-      <td mat-cell *matCellDef="let element">
-        <div
-          [innerHTML]="
-            element.category.categoryName | searchHighlight : searchText.value
-          "
-        ></div>
-      </td>
-    </ng-container>
+      <!-- ISBN Column -->
+      <ng-container matColumnDef="isbn">
+        <th mat-header-cell *matHeaderCellDef>ISBN</th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [innerHTML]="element.isbn | searchHighlight : searchText.value"
+          ></div>
+        </td>
+      </ng-container>
 
-    <!-- Date Creation Column-->
-    <ng-container matColumnDef="dateCreation">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="sort by dateCreation"
-      >
-        Date Création
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.dateCreation | date : "fullDate" }}
-      </td>
-    </ng-container>
+      <!-- Price Column -->
+      <ng-container matColumnDef="price">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="sort by price"
+        >
+          Price
+        </th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [innerHTML]="element.price | searchHighlight : searchText.value"
+          ></div>
+        </td>
+      </ng-container>
 
-    <!-- Date Publication Column -->
-    <ng-container matColumnDef="datePublication">
-      <th
-        mat-header-cell
-        *matHeaderCellDef
-        mat-sort-header
-        sortActionDescription="sort by datePublication"
-      >
-        Date Publication
-      </th>
-      <td mat-cell *matCellDef="let element">
-        {{ element.datePublication | date : "fullDate" }}
-      </td>
-    </ng-container>
+      <!-- Quantity Column -->
+      <ng-container matColumnDef="quantity">
+        <th mat-header-cell *matHeaderCellDef>Quantity</th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            style="display: inline"
+            [innerHTML]="
+              element.inventory.quantity | searchHighlight : searchText.value
+            "
+          ></div>
+          @if(element.inventory.quantity < 5) {
+          <ng-container>
+            <i
+              class="bi bi-exclamation-circle-fill text-danger"
+              matTooltip="Low Inventory"
+              matTooltipPosition="above"
+            >
+            </i>
+          </ng-container>
+          }
+        </td>
+      </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-  </table>
+      <!-- Author Column -->
+      <ng-container matColumnDef="author">
+        <th mat-header-cell *matHeaderCellDef>Author</th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [innerHTML]="
+              element.author.fullName | searchHighlight : searchText.value
+            "
+          ></div>
+        </td>
+      </ng-container>
 
-  <mat-paginator
-    [pageSizeOptions]="[10, 5, 8]"
-    showFirstLastButtons
-    aria-label="Select page of periodic elements"
-  >
-  </mat-paginator>
+      <!-- Category Column -->
+      <ng-container matColumnDef="category">
+        <th mat-header-cell *matHeaderCellDef>Category</th>
+        <td mat-cell *matCellDef="let element">
+          <div
+            [innerHTML]="
+              element.category.categoryName | searchHighlight : searchText.value
+            "
+          ></div>
+        </td>
+      </ng-container>
+
+      <!-- Date Creation Column-->
+      <ng-container matColumnDef="dateCreation">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="sort by dateCreation"
+        >
+          Date Création
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.dateCreation | date : "fullDate" }}
+        </td>
+      </ng-container>
+
+      <!-- Date Publication Column -->
+      <ng-container matColumnDef="datePublication">
+        <th
+          mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          sortActionDescription="sort by datePublication"
+        >
+          Date Publication
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.datePublication | date : "fullDate" }}
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+
+    <mat-paginator
+      [pageSizeOptions]="[10, 5, 8]"
+      showFirstLastButtons
+      aria-label="Select page of periodic elements"
+    >
+    </mat-paginator>
+  </div>
 </div>

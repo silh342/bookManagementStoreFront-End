@@ -1,47 +1,49 @@
-<div class="row mt-5">
-  <table class="table table-hover">
-    <thead>
-      <tr>
-        <th>Cover</th>
-        <th>Title</th>
-        <th>Author</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th class="text-center">Actions</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for(favbook of listFavBook$ | async; track $index) {
-      <tr>
-        <td>
-          <img
-            [ngClass]="{ imgClass: true }"
-            src="/assets/images/standard.avif"
-            alt="No image found"
-          />
-        </td>
-        <td>{{ favbook.title }}</td>
-        <td>{{ favbook.author.fullName }}</td>
-        <td>{{ favbook.category.categoryName }}</td>
-        <td>{{ favbook.price }}</td>
-        <td class="text-center">
-          <button
-            class="btn btn-success mx-2"
-            [routerLink]="['/books', favbook.bookId]"
-          >
-            <i class="bi bi-journal-arrow-up"></i>
-            View details
-          </button>
-          <button
-            class="btn btn-danger"
-            (click)="openDialgDeleteFromFavorites(favbook.bookId)"
-          >
-            <i class="bi bi-trash3"></i>
-            Remove from favorites
-          </button>
-        </td>
-      </tr>
-      }
-    </tbody>
-  </table>
+<div class="container">
+  <div class="row mt-5">
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Cover</th>
+          <th>Title</th>
+          <th>Author</th>
+          <th>Category</th>
+          <th>Price</th>
+          <th class="text-center">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for(favbook of listFavBook$ | async; track $index) {
+        <tr>
+          <td>
+            <img
+              [ngClass]="{ imgClass: true }"
+              src="/assets/images/standard.avif"
+              alt="No image found"
+            />
+          </td>
+          <td>{{ favbook.title }}</td>
+          <td>{{ favbook.author.fullName }}</td>
+          <td>{{ favbook.category.categoryName }}</td>
+          <td>{{ favbook.price }}</td>
+          <td class="text-center">
+            <button
+              class="btn btn-success mx-2"
+              [routerLink]="['/books', favbook.bookId]"
+            >
+              <i class="bi bi-journal-arrow-up"></i>
+              View details
+            </button>
+            <button
+              class="btn btn-danger"
+              (click)="openDialgDeleteFromFavorites(favbook.bookId)"
+            >
+              <i class="bi bi-trash3"></i>
+              Remove from favorites
+            </button>
+          </td>
+        </tr>
+        }
+      </tbody>
+    </table>
+  </div>
 </div>
