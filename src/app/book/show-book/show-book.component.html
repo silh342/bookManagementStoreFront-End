@@ -1,108 +1,110 @@
-<div class="row my-5">
-  @if(currentBook$ | async; as currentBook) {
-  <div class="col-md-6">
-    <div class="card mb-3">
-      <img
-        src="/assets/images/standard.avif"
-        alt="No image available"
-        class="card-img-top"
-      />
-      <div class="card-body">
-        <h5 class="card-title">
-          {{ currentBook.title }}
-        </h5>
-        <p class="card-text">
-          {{ currentBook.isbn }}
-        </p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item text-muted">
-          <i class="bi bi-tag-fill"></i>
-          {{ currentBook.category?.categoryName }}
-        </li>
-        <li class="list-group-item text-muted">
-          <i class="bi bi-person-fill"></i>
-          {{ currentBook.author?.fullName }}
-        </li>
-        <li class="list-group-item text-muted">
-          <i class="bi bi-calendar2-week-fill"></i>
-          {{ currentBook.dateCreation | date : "fullDate" }}
-        </li>
-        <li class="list-group-item">
-          <i class="bi bi-currency-dollar"></i>
-          {{ currentBook.price }}
-        </li>
-      </ul>
-      <div class="card-body">
-        <ng-container
-          *ngIf="
-            activeUser.role.includes('ROLE_USER') ||
-            activeUser.role.includes('ROLE_ADMIN')
-          "
-        >
-          <button
-            class="btn btn-info mx-2"
-            [routerLink]="['/books', currentBook.bookId, 'edit']"
+<div class="container">
+  <div class="row my-5">
+    @if(currentBook$ | async; as currentBook) {
+    <div class="col-md-6">
+      <div class="card mb-3">
+        <img
+          src="/assets/images/standard.avif"
+          alt="No image available"
+          class="card-img-top"
+        />
+        <div class="card-body">
+          <h5 class="card-title">
+            {{ currentBook.title }}
+          </h5>
+          <p class="card-text">
+            {{ currentBook.isbn }}
+          </p>
+        </div>
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-muted">
+            <i class="bi bi-tag-fill"></i>
+            {{ currentBook.category?.categoryName }}
+          </li>
+          <li class="list-group-item text-muted">
+            <i class="bi bi-person-fill"></i>
+            {{ currentBook.author?.fullName }}
+          </li>
+          <li class="list-group-item text-muted">
+            <i class="bi bi-calendar2-week-fill"></i>
+            {{ currentBook.dateCreation | date : "fullDate" }}
+          </li>
+          <li class="list-group-item">
+            <i class="bi bi-currency-dollar"></i>
+            {{ currentBook.price }}
+          </li>
+        </ul>
+        <div class="card-body">
+          <ng-container
+            *ngIf="
+              activeUser.role.includes('ROLE_USER') ||
+              activeUser.role.includes('ROLE_ADMIN')
+            "
           >
-            Edit
-          </button>
+            <button
+              class="btn btn-info mx-2"
+              [routerLink]="['/books', currentBook.bookId, 'edit']"
+            >
+              Edit
+            </button>
+
+            <button
+              *ngIf="activeUser.role.includes('ROLE_ADMIN')"
+              class="btn btn-danger mx-2"
+              (click)="openDeleteConfirmationDialog(currentBook.bookId)"
+            >
+              Delete
+            </button>
+            <button
+              class="btn btn-secondary mx-2"
+              (click)="showEditStockDialog()"
+            >
+              Edit Stock
+            </button>
+          </ng-container>
 
           <button
-            *ngIf="activeUser.role.includes('ROLE_ADMIN')"
-            class="btn btn-danger mx-2"
-            (click)="openDeleteConfirmationDialog(currentBook.bookId)"
+            class="btn btn-outline-success"
+            [ngClass]="{
+              'btn-outline-success': !favoriteBtn,
+              'btn-success': favoriteBtn
+            }"
+            (click)="favoriteBtnClick()"
           >
-            Delete
+            <i class="bi bi-suit-heart-fill"></i>
+            {{ favoriteBtn ? "Remove from favorites" : "Add to favorites" }}
           </button>
-          <button
-            class="btn btn-secondary mx-2"
-            (click)="showEditStockDialog()"
+        </div>
+        <div class="card-footer">
+          <i
+            class="bi bi-eye-fill"
+            matTooltip="Book views"
+            matTooltipPosition="above"
+            >{{ currentBook.views }}</i
           >
-            Edit Stock
-          </button>
-        </ng-container>
-
-        <button
-          class="btn btn-outline-success"
-          [ngClass]="{
-            'btn-outline-success': !favoriteBtn,
-            'btn-success': favoriteBtn
-          }"
-          (click)="favoriteBtnClick()"
-        >
-          <i class="bi bi-suit-heart-fill"></i>
-          {{ favoriteBtn ? "Remove from favorites" : "Add to favorites" }}
-        </button>
-      </div>
-      <div class="card-footer">
-        <i
-          class="bi bi-eye-fill"
-          matTooltip="Book views"
-          matTooltipPosition="above"
-          >{{ currentBook.views }}</i
-        >
-        <i
-          class="bi bi-chat-dots mx-3"
-          matTooltip="Reviews"
-          matTooltipPosition="above"
-          >{{ currentBook.reviews.length }}</i
-        >
-        <i
-          class="bi bi-heart-fill"
-          matTooltip="favorites"
-          matTooltipPosition="above"
-          >{{ currentBook.likedByUsers.length }}</i
-        >
+          <i
+            class="bi bi-chat-dots mx-3"
+            matTooltip="Reviews"
+            matTooltipPosition="above"
+            >{{ currentBook.reviews.length }}</i
+          >
+          <i
+            class="bi bi-heart-fill"
+            matTooltip="favorites"
+            matTooltipPosition="above"
+            >{{ currentBook.likedByUsers.length }}</i
+          >
+        </div>
       </div>
     </div>
-  </div>
-  }
+    }
 
-  <div class="col-md-6">
-    <app-review
-      [bookId]="currentBookId"
-      [activeUser]="activeUser"
-      (reviewListChanged)="updateReviews()"
-    ></app-review>
+    <div class="col-md-6">
+      <app-review
+        [bookId]="currentBookId"
+        [activeUser]="activeUser"
+        (reviewListChanged)="updateReviews()"
+      ></app-review>
+    </div>
   </div>
 </div>
